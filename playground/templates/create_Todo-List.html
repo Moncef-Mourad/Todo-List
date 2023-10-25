@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Create Todo-List</title>
+</head>
+<body>
+        <div id="todo-list">
+            <h1>Todo List</h1>
+
+            <form method="post" action="{% url 'todo_page_create' %}" id="todo-form">
+                {% csrf_token %}
+                <input type="text" id="new-task"     name="task_Txt" placeholder="Add a new task" required>
+                <input type="date" id="date-created" name="date" required min="{{ current_date }}">
+                <input type="checkbox"               name="done" hidden>
+                <button type="submit" id="add-task">Add</button>
+            </form>
+
+            <style>
+                #isDone-btn {
+                        width: 30px; /* Adjust the width to match your image dimensions */
+                        height: 30px; /* Adjust the height to match your image dimensions */
+                        background-size: cover;
+                        border: none; /* Remove the default button border */
+                        cursor: pointer;
+                        outline: none; /* Remove the outline on focus */
+                        }
+
+                        li {
+        text-align: left; /* Adjust this property to align the content within the <li> as you prefer */
+        }
+
+    .button-container {
+        text-align: center;
+    }
+
+    .done {
+        display: inline-block;
+    }
+
+    .delete-button {
+        display: inline-block;
+    }
+
+            </style>
+
+
+            <ul id="task-list">
+                <!-- Tasks will be added here dynamically using JavaScript -->
+                {% if all_tasks %}
+                {% for Task in all_tasks %}
+                <li>
+                    
+                    <form method="post" action="{% url 'checked_done_todo' Task.id %}">
+                        {% csrf_token %}
+                            <!-- <button type="submit" id="custom-checkbox" class="done" name="done" {% if Task.isDone %}checked{% endif %}> -->
+                                <div class="button-container">
+                                    <button type="submit" id="custom-checkbox" class="done" name="done" >
+                                        <img id="isDone-btn" {% if Task.isDone %} src="/playground/static/images/checked.png" {% else %} src="/playground/static/images/not-checked.png" {% endif %}>
+                                    </button>
+                                </div>
+                    </form>
+                        
+                        <span>{{Task.task_Text}}</span>
+                        <form method="post" action="{% url 'delete_todo' Task.id %}">
+                            {% csrf_token %}
+                            <button class="delete-button" type="submit">Delete</button>
+                        </form>
+                        <br>
+                    </li>
+                        {% endfor %}
+                {% endif %}
+
+            </ul>
+        </div>
+        <script src="{% static 'app.js' %}"></script>
+</body>
+</html>
