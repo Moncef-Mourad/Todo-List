@@ -24,7 +24,7 @@
                 #custom-checkbox {
                         width: 30px; /* Adjust the width to match your image dimensions */
                         height: 30px; /* Adjust the height to match your image dimensions */
-                        background-image: url('/playground/static/images/checked.png');
+                        background-image: url('/playground/static/images/not-checked.png');
                         background-size: cover;
                         border: none; /* Remove the default button border */
                         cursor: pointer;
@@ -32,16 +32,27 @@
                         }
 
                         /* Define styles for when the button is checked */
-                        #custom-checkbox:checked {
-                        background-color: #00f; /* Change the background color when checked, replace with your desired color */
-                        color: #fff; /* Change the text color when checked */
-                        }/* Define styles for when the button is checked */
-                        #custom-checkbox:default{
-                        background-image: url('/playground/static/images/not-checked.png');
-
-                        background-color: #00f; /* Change the background color when checked, replace with your desired color */
-                        color: #fff; /* Change the text color when checked */
+                        #custom-checkbox::after{
+                        background-image: url('/playground/static/images/checked.png');
+                        
                         }
+
+                        li {
+        text-align: left; /* Adjust this property to align the content within the <li> as you prefer */
+    }
+
+    .button-container {
+        text-align: center;
+    }
+
+    .done {
+        display: inline-block;
+    }
+
+    .delete-button {
+        display: inline-block;
+    }
+
             </style>
 
 
@@ -53,11 +64,12 @@
                     
                     <form method="post" action="{% url 'checked_done_todo' Task.id %}">
                         {% csrf_token %}
-                            <button type="submit" id="custom-checkbox" class="done" name="done" {% if Task.isDone %}checked{% endif %}>
-
+                            <!-- <button type="submit" id="custom-checkbox" class="done" name="done" {% if Task.isDone %}checked{% endif %}> -->
+                                <div class="button-container">
+                                    <button type="submit" id="custom-checkbox" class="done" name="done" {% if Task.isDone %}::after{% endif %}></button>
+                                </div>
                     </form>
                         
-                      
                         <span>{{Task.task_Text}}</span>
                         <form method="post" action="{% url 'delete_todo' Task.id %}">
                             {% csrf_token %}
