@@ -19,16 +19,45 @@
                 <input type="checkbox"               name="done" hidden>
                 <button type="submit" id="add-task">Add</button>
             </form>
+
+            <style>
+                #custom-checkbox {
+                        width: 30px; /* Adjust the width to match your image dimensions */
+                        height: 30px; /* Adjust the height to match your image dimensions */
+                        background-image: url('/playground/static/images/checked.png');
+                        background-size: cover;
+                        border: none; /* Remove the default button border */
+                        cursor: pointer;
+                        outline: none; /* Remove the outline on focus */
+                        }
+
+                        /* Define styles for when the button is checked */
+                        #custom-checkbox:checked {
+                        background-color: #00f; /* Change the background color when checked, replace with your desired color */
+                        color: #fff; /* Change the text color when checked */
+                        }/* Define styles for when the button is checked */
+                        #custom-checkbox:default{
+                        background-image: url('/playground/static/images/not-checked.png');
+
+                        background-color: #00f; /* Change the background color when checked, replace with your desired color */
+                        color: #fff; /* Change the text color when checked */
+                        }
+            </style>
+
+
             <ul id="task-list">
                 <!-- Tasks will be added here dynamically using JavaScript -->
                 {% if all_tasks %}
                 {% for Task in all_tasks %}
                 <li>
-                    {% if Task.isDone %}
-                        <input type="checkbox" class="done" name="done" checked>
-                        {% else %}
-                        <input type="checkbox" class="done" name="done">
-                        {% endif %}
+                    
+                    <form method="post" action="{% url 'checked_done_todo' Task.id %}">
+                        {% csrf_token %}
+                            <button type="submit" id="custom-checkbox" class="done" name="done" {% if Task.isDone %}checked{% endif %}>
+
+                    </form>
+                        
+                      
                         <span>{{Task.task_Text}}</span>
                         <form method="post" action="{% url 'delete_todo' Task.id %}">
                             {% csrf_token %}

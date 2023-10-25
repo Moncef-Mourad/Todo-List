@@ -44,6 +44,17 @@ def delete_todo(request,task_id):
     return redirect('todo_page_create')
 
 
+def checked_done_todo(request,task_id):
+    if request.method == 'POST':
+        # Use get_object_or_404 to get the specific Todo item
+        task = get_object_or_404(Todo, id=task_id)
+        # mark the checking box
+        task.isDone= not task.isDone
+        task.save()
+    # After deletion, you can redirect to the same page or a different page as needed.
+    return redirect('todo_page_create')
+
+
 
 
 
