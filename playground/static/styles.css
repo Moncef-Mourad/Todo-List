@@ -21,6 +21,7 @@ body {
 }
 
 .task {
+    
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,8 +29,26 @@ body {
     border: 1px solid #ddd;
     border-radius: 3px;
     margin: 5px 0;
-    background-color: #fff;
+    background-color: darkgray;
 }
+
+.isDone-btn{
+    width: 20px; /* Adjust the width to match your image dimensions */
+    height: 20px; /* Adjust the height to match your image dimensions */
+    background-size: cover;
+    border: none; /* Remove the default button border */
+    cursor: pointer;
+    outline: none; /* Remove the outline on focus */
+    }
+
+.task-text {
+    
+    flex: 1; /* Allow task text to expand and fill available space */
+    margin-right: 10px; /* Add margin to separate it from delete button */
+    /*white-space: normal; /* Allow text to wrap within the available space */
+    /*overflow: hidden; /* Hide overflow text */
+}
+
 
 .task .done {
     margin-right: 10px;
