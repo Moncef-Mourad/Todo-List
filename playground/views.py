@@ -10,30 +10,18 @@ from datetime import datetime
 #request handler
 
 def index(request,YY,MM,DD):
-    # #Connect to the database
-    # all_todo_lists = Todo.objects.all()
-    # html = ''
-    # for task in all_todo_lists:
-    #     url = '/index/todo_page/'+str(task.id)+'/'
-    #     html+= '<a href="'+ url +'">Todo-List_'+ str(task.id) +'</a><br>'
-    # return HttpResponse(html)
-
-    # Connect to the database
-    html =''
     date = YY+'-'+MM+'-'+DD
+    # # Connect to the database
     tasks_ymd = Todo.objects.filter(date_created=date)
-    # Convert the date string to a datetime object
+    # # Convert the date string to a datetime object
     date_object = datetime.strptime(date, '%Y-%m-%d')
-    # Get the day name
+    # # Get the day name
     day_name = date_object.strftime('%A')
-    html+='<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>'
-    html +='<p><b>'+day_name+'</b> ,'+date+'</p><br>'
-    html += '<div class="date-picker"><button id="calendar-button">Select Date</button><input type="date" id="date-input" style="display: none;"></div>'
-        
-    for tasks_ymd_txt in tasks_ymd:
-        html += '<p>'+ tasks_ymd_txt.task_Text +'</p><br>'
-    html+='<script>$(function() {$("#calendar-button").click(function() {$("#date-input").datepicker("show");});});</script>'    
-    return HttpResponse(html)
+    # # Get the month name
+    month_name = date_object.strftime('%b')
+
+    return render(request, 'view_week.html',{'day_name': day_name,'YY': YY,'MM':month_name,'DD':DD,'tasks_ymd': tasks_ymd,})    
+
 
 
 

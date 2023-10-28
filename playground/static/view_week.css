@@ -1,0 +1,21 @@
+.date-picker {
+    display: inline-block;
+    position: relative;
+}
+.calendar {
+    display: none;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.calendar-grid button {
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
