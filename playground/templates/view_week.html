@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'view_week.css' %}">
+    <title>View Week</title>
+</head>
+<body>
+    <div id="root">
+        
+        <div class="date-picker">
+            <p><b id="day_name">{{day_name}}</b>,
+                <button id="year" style="cursor: pointer; background: none; border: none;">{{YY}}</button> -
+                <button id="month" style="cursor: pointer; background: none; border: none;">{{MM}}</button> -
+                <button id="day" style="cursor: pointer; background: none; border: none;">{{DD}}</button>
+                <div class="calendar" id="calendar"></div>
+            </p>
+        </div>
+<br><br><br><br><br><br><br><br><br><br>
+        <ul id="tasks">
+            <!-- Your tasks will be displayed here -->
+            {% for tasks_ymd_txt in tasks_ymd %}
+                <li>{{tasks_ymd_txt.task_Text}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="{% static 'view_week.js' %}"></script>
+ 
+</body>
+</html>
