@@ -110,7 +110,7 @@ function generateDatePicker() {
         const urlParts = window.location.pathname.split('/');
         urlParts[urlParts.length - 4] = newYear;
         const updatedURL = urlParts.join('/');
-        console.log(updatedURL);
+
         window.location.assign(updatedURL);
     });
     }
@@ -153,8 +153,14 @@ function generateDatePicker() {
         const dayBtns = document.getElementsByClassName('day-btn');
         for (const dayBtn of dayBtns) {
             dayBtn.addEventListener('click', () => {
-            const newDay = dayBtn.textContent;
-            const urlParts = window.location.pathname.split('/');
+                var newDay =dayBtn.textContent;
+                var numericValue = parseFloat(newDay);
+                if (numericValue < 10) {
+                    dayElement.textContent = '0' + newDay;
+                    newDay = dayElement.textContent;
+                    console.log(newDay);
+                }
+                const urlParts = window.location.pathname.split('/');
             urlParts[urlParts.length - 2] = newDay;
             const updatedURL = urlParts.join('/');
             window.location.assign(updatedURL);
