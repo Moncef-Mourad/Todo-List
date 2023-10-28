@@ -134,7 +134,6 @@ function generateDatePicker() {
                 const urlParts = window.location.pathname.split('/');
                 urlParts[urlParts.length - 3] = monthNumber;
                 const updatedURL = urlParts.join('/');
-                console.log(updatedURL);
                 window.location.assign(updatedURL);
             });
         }
@@ -158,7 +157,6 @@ function generateDatePicker() {
             const urlParts = window.location.pathname.split('/');
             urlParts[urlParts.length - 2] = newDay;
             const updatedURL = urlParts.join('/');
-            console.log(updatedURL);
             window.location.assign(updatedURL);
         });
     }
