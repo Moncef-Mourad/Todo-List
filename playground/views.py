@@ -74,7 +74,5 @@ def checked_done_todo(request,task_id):
 
 
 
-def view_todo_page(request,task_id):
-    #Connect to the database
-    task_id_text = Todo.objects.get(id=task_id).task_Text
-    return render(request, 'view_Todo-List.html', {'task_id': str(task_id), 'task_Text': task_id_text})
+def view_main_page(request):
+    return render(request, 'Main.html')
