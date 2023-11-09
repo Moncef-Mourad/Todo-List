@@ -33,7 +33,10 @@
     background: #1E293C; }
 
   .LeftBarContent{
+    position: absolute;
     margin: 8%;
+    display: flex;
+    flex-direction: column;
   }
   .Menu{
     display: flex;
@@ -41,7 +44,7 @@
     align-items: center;
   }  
   .Menu p{
-    margin: 0;
+    margin: 0 0 5% 0;
     padding: 0;
     /* flex-shrink: 0; */
     color: var(--Color, #FFF);
@@ -76,7 +79,6 @@
     padding: 0;
     width: 86%;
     height: 20px;
-    /* justify-content: center; */
     flex-shrink: 0;
     font-family: Inter;
     font-size: 16px;
@@ -90,17 +92,16 @@
   } */
 
   .Tasks-List{
-    /* display: flex; */
     margin: 0;
     padding: 0;
-    height: 30px;
     list-style: none;
-    align-items: center;
+    justify-items: center;
 
     
   }
 
-  .Tasks-Icons, .Lists-Icons{
+
+  .Tasks-Icons, .Lists-Icons, .Options-Icons{
     margin-left: 3%;
     margin-right: 3%;
   }
@@ -113,28 +114,45 @@
   }
 
 /*#########################################################*/
-  .First-Line{
+  .Line{
     width: 100%;
     height: 1px;
     background: #FFF;
   }
 /*#########################################################*/
   
+.LeftBarContent2{
+  margin: 0% 8% 8% 8%;
+  /* padding: 0; */
+}
+
   .Lists-List{
-    margin-top: 60%;
     padding: 0;
+    margin: 0%;
     list-style: none;
   }
 
 
   .Lists-Icons{
     border-radius: 5px;
+    /* padding: 0%; */
     width: 20px;
     height: 20px;
   }
   
+/* #############################" */
 
+.LeftBarContent3{
+  position: absolute;
+  height: auto;
+  margin:0% 8% 0% 8%;
 
+}
+
+.Options-List{
+  padding: 0;
+  list-style: none;
+}
 
   /* right side bar css content Bellow */
 
