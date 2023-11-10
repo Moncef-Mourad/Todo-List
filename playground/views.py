@@ -74,5 +74,5 @@ def checked_done_todo(request,task_id):
 
 
 
-def view_main_page(request):
-    return render(request, 'Main.html')
+def view_today_page(request):
+    return render(request, 'Today.html')
