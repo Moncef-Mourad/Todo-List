@@ -74,5 +74,16 @@ def checked_done_todo(request,task_id):
 
 
 
+#URLS for the Html's
+
+def view_upcoming_page(request):
+    return render(request, 'Upcoming.html')
+
 def view_today_page(request):
     return render(request, 'Today.html')
+
+def view_calendar_page(request):
+    return render(request, 'Calendar.html')
+
+def view_stickywall_page(request):
+    return render(request, 'StickyWall.html')
