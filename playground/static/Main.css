@@ -79,8 +79,10 @@ a{
   .Search-Bar input{
     margin: 0;
     padding: 0;
+    color: #FFF;
     width: 86%;
     height: 20px;
+    border: none;
     flex-shrink: 0;
     font-family: Inter;
     font-size: 16px;
@@ -161,6 +163,8 @@ a{
   /* right side bar css content Bellow */
 
   .RightBarBG { grid-area: RightBarBG;
+    display: flex;
+    flex-direction: column;
     border-radius: 20px;
     background: #1E293C; 
     margin: 25px 30px;}
@@ -171,7 +175,132 @@ a{
       margin: 8%;
   
     }  
+
+.Task-Title{
+  margin-top: 5%;
+  margin-bottom: 10%;
+  border-radius: 5px;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  resize: none;
+  border: 1px solid #0F172B;
+  background: #0F172B;
   
+}
+.Task-Title::placeholder, .Task-Description::placeholder{
+  color: #FFF;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+}
+
+.Task-Description{
+  color: #FFF;
+  border-radius: 5px;
+  resize: none;
+  border: 1px solid #0F172B;
+  background: #0F172A;
+}
+
+
+/* select, input{
+  display: flex;
+  flex-direction: column;
+} */
+
+
+
+
+
+/* .Select-Options{
+  display: flex;
+  flex-direction: column;
+} */
+
+
+.User-Options{
+  display: inline-block;
+  width: 100px;
+}
+
+.Select-List{
+margin-top: 10%;
+}
+/* .Select-List select{
+  margin-left: 15%;
+} */
+
+.Select-DueDate, .Select-Progress, .Select-List{
+  margin-bottom: 5%;
+}
+
+.select-L, .select-D, .select-P{
+  width: 35%;
+  border-radius: 5px;
+  color: var(--Color, #FFF);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: 1px solid #0F172B;
+  background: #0F172B;
+}
+
+
+
+
+.Task-Buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 56%;
+
+  
+}
+
+.Delete-Btn{
+  width: 48%;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #0F172B;
+  background: #F8F7FF;
+
+  color: var(--Color-7, #000);
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+  
+.Save-Btn{
+  width: 48%;
+  height: 35px;
+  
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #0F172B;
+  background: #9EFF00;
+
+  color: #000;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+
   html, body , .container {
     height: 100%;
     margin: 0;
@@ -183,7 +312,9 @@ a{
   
   
 
-/* Right-Middle-Left-Bar css  */
+/* Active-Bar css  */
+
+
 
 
 

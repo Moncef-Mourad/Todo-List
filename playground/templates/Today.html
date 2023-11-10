@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'Main.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Todo-List Maker</title>
 </head>
 <body>
@@ -99,15 +102,46 @@
         <div class="RightBarBG">
             <div class="RightBarContent">
                 <label>Task:</label>
-                <textarea class="Task-Title" placeholder="Task Title"></textarea>
-                <textarea class="Task-Desctiption" placeholder="Description"></textarea>
-
+                <textarea class="Task-Title" placeholder="Task Title" rows="2"></textarea>
+                <textarea class="Task-Description" placeholder="Description" rows="8"></textarea>
+                <div class="Select-Options">
+                    <div class="Select-List">
+                        <label class="User-Options">List:</label>
+                        <select class="select-L">
+                            <option >Personal</option>
+                            <option>Work</option>
+                            <option>List 1</option>
+                        </select>
+                    </div>
+                    <div class="Select-DueDate" for="Select-DueDate">
+                        <label class="User-Options" for="dateSelect">Due Date:</label>
+                        <input id="dateSelect" class="select-D">
+                    </div>
+                    <div class="Select-TaskProgress">
+                        <label class="User-Options" for="progress-select">Progress:</label>
+                        <select class="select-P">
+                            <option>In Progress</option>
+                            <option>Done</option>
+                            <option>Incomplete</option>
+                        </select>
+                </div>
+            <div class="Task-Buttons">
+                <button class="Delete-Btn">Delete Task</button>
+                <button class="Save-Btn">Save Changes</button>
+            </div>
+            
+            </div>
 
             </div>
         </div>
-
+        
       </div>
 
 <!-- <script src="#"></script> -->
+<script>
+    $(function() {
+        $("#dateSelect").datepicker();
+    });
+</script>
 </body>
 </html>
