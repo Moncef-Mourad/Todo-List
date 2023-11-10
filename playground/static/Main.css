@@ -74,7 +74,7 @@
     margin-left: 3%;
   }
 
-  .Search-Bar p{
+  .Search-Bar input{
     margin: 0;
     padding: 0;
     width: 86%;
@@ -85,6 +85,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    background: #0F172B;
   }
 
   /* .Tasks{
@@ -96,9 +97,10 @@
     padding: 0;
     list-style: none;
     justify-items: center;
-
+    
     
   }
+ 
 
 
   .Tasks-Icons, .Lists-Icons, .Options-Icons{
@@ -161,7 +163,7 @@
     background: #1E293C; 
     margin: 25px 30px;}
   
-  
+   
   html, body , .container {
     height: 100%;
     margin: 0;
@@ -170,6 +172,7 @@
     font-family: 'Inter', sans-serif;
     font-weight: 600;
   }
+  
   
 
 /* Right-Middle-Left-Bar css  */
