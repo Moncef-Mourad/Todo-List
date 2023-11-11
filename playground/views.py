@@ -3,7 +3,8 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Todo
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.http import JsonResponse
 
 # Create your views here.
 #request -> response 
@@ -77,7 +78,25 @@ def checked_done_todo(request,task_id):
 #URLS for the Html's
 
 def view_upcoming_page(request):
-    return render(request, 'Upcoming.html')
+
+    current_date = datetime.now().date()
+    next_day = current_date + timedelta(days=1)
+    formatted_next_day = next_day.strftime('%b %d, %Y')
+    upcoming_tasks = Todo.objects.filter(due_date=next_day)
+
+    return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,})
+
+def get_task_data(request, task_id):
+    task = get_object_or_404(Todo, id=task_id)
+    data = {
+        'title': task.task_Text,
+        'description': task.task_Descr,
+        'list': task.task_List,
+        'progress': task.task_Progress,
+        'due_date': task.due_date,
+
+    }
+    return JsonResponse(data)
 
 def view_today_page(request):
     return render(request, 'Today.html')

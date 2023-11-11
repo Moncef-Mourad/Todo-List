@@ -167,7 +167,23 @@ a{
     flex-direction: column;
     border-radius: 20px;
     background: #1E293C; 
-    margin: 25px 30px;}
+    margin: 25px 30px;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: width 0.5s;
+  
+  }
+
+  .RightBarBG.show {
+    width: 90%;
+    max-width: 90%; 
+}
 
     .RightBarContent{
       display: flex;
@@ -314,14 +330,57 @@ margin-top: 10%;
 
 /* Active-Bar css  */
 
+.Active{
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.Title{
+  margin: 0%;
+}
+
+.Upcoming-Tasks{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.Upcoming-Task{
+  display: flex;
+  margin: 1% 0 1% 0;
+  width: 100%;
+  border-radius: 8px;
+  border-bottom: 1px solid #0F172B;
+  background: #1E293C;
+  align-items: center;
+}
 
 
+.task_txt_div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.task_txt_div:hover{
+  cursor: pointer;
+}
 
 
-
-
-
-
+.isDone-Icon{
+  margin-left: 3%;
+  margin-right: 3%;
+  transition: transform 0.3s ease-in-out;
+}
+.isDone-Icon:hover{
+  transform: scale(1.2);
+}
+.Arrow-Icon{
+  margin-right: 3%;
+  
+}
 
 
   /* For presentation only, no need to copy the code below */
