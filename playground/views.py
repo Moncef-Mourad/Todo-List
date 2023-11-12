@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Todo
 from datetime import datetime, timedelta
-from django.http import JsonResponse
+from django.http import JsonResponse   
+import json 
 
 # Create your views here.
 #request -> response 
@@ -50,15 +51,37 @@ def create_todo_page(request):
     return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
 
 
-def delete_todo(request,task_id):
-    if request.method == 'POST':
-        # Use get_object_or_404 to get the specific Todo item
-        task = get_object_or_404(Todo, id=task_id)
-        # Delete the item
-        task.delete()
+def handle_task(request, task_id, source):
+    task = get_object_or_404(Todo, id=task_id)
     
-    # After deletion, you can redirect to the same page or a different page as needed.
-    return redirect('todo_page_create')
+    # Your logic for handling the task based on the source (e.g., delete or save changes)
+    if '/todo_page/delete/' in request.path:
+        # Logic for delete
+        task.delete()
+        # generate_notification("Task Delete Successfully!")
+    elif '/todo_page/save/' in request.path:
+        # Logic for save changes
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            task.task_Text = data.get('title', task.task_Text)
+            task.task_Descr = data.get('description', task.task_Descr)
+            task.due_date = data.get('due_date', task.due_date)
+            task.task_Progress = data.get('progress', task.task_Progress)
+            task.task_List = data.get('list', task.task_List)
+            task.save()
+
+    # Redirect the user to the appropriate page based on the source
+    if source == 'upcoming':
+        return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('upcoming_page')})
+        # return redirect(reverse('upcoming_page'))
+    elif source == 'today':
+        return redirect('today_tasks_url_name')
+    elif source == 'calendar':
+        return redirect('today_page')
+    else:
+        # Handle other cases or provide a default redirect
+        return redirect('index')
+
 
 
 def checked_done_todo(request,task_id):
@@ -106,3 +129,12 @@ def view_calendar_page(request):
 
 def view_stickywall_page(request):
     return render(request, 'StickyWall.html')
+
+
+
+
+
+
+# other functionalities:
+
+

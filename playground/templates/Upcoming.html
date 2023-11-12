@@ -128,14 +128,15 @@
         
         
         <div class="RightBarBG">
-            <div class="RightBarContent">
-                <label>Task:</label>
-                <textarea class="Task-Title" placeholder="Task Title" rows="2"></textarea>
-                <textarea class="Task-Description" placeholder="Description" rows="8"></textarea>
+            <div class="RightBarContent" id="RightBarContent">
+
+                    <label>Task:</label>
+                <textarea class="Task-Title" id="Task-Title" placeholder="Task Title" rows="2"></textarea>
+                <textarea class="Task-Description" id="Task-Description" placeholder="Description" rows="8"></textarea>
                 <div class="Select-Options">
                     <div class="Select-List">
                         <label class="User-Options">List:</label>
-                        <select class="select-L">
+                        <select class="select-L" id="select-L">
                             <option >Personal</option>
                             <option>Work</option>
                             <option>List 1</option>
@@ -147,34 +148,39 @@
                     </div>
                     <div class="Select-TaskProgress">
                         <label class="User-Options" for="progress-select">Progress:</label>
-                        <select class="select-P">
+                        <select class="select-P" id="select-P">
                             <option value="In Progress">In Progress</option>
                             <option value="Done">Done</option>
                             <option value="Incomplete">Incomplete</option>
                         </select>
                 </div>
-            <div class="Task-Buttons">
-                <button class="Delete-Btn">Delete Task</button>
-                <button class="Save-Btn">Save Changes</button>
+                <div class="Task-Buttons">
+                    <form method="post" id="delete-form" >
+                        {% csrf_token %}
+                        <button id="Delete-Btn" class="Delete-Btn" type="submit">Delete Task</button>
+                    </form>
+                        <button id="Save-Btn" class="Save-Btn" type="submit">Save Changes</button>
+                </div>
+                
             </div>
             
-            </div>
-
-            </div>
+        </div>
         </div>
 
 
 
 
-
+        
         
     </div>
-
-<!-- <script src="#"></script> -->
-<script>
-    $("#dateSelect").datepicker();
-    const taskDivs = document.querySelectorAll('.task_txt_div');
-    const rightBarBG = document.querySelector('.RightBarBG');
+    
+    <!-- <script src="#"></script> -->
+    <script>
+        $("#dateSelect").datepicker();
+        const taskDivs = document.querySelectorAll('.task_txt_div');
+        const rightBarBG = document.querySelector('.RightBarBG');
+        var deleteForm = document.getElementById('delete-form');
+        var saveForm = document.getElementById('save-form');
 
     var clicked = false
     taskDivs.forEach(function(taskDiv) {
@@ -190,9 +196,8 @@
                     let taskDueDateInput = document.getElementsByClassName('select-D')[0];
                     let taskProgress = document.getElementsByClassName('select-P')[0];
 
-
                 const taskId = taskDiv.getAttribute('data-task-id');
-                const response = await fetch(`/index/todo_page/Upcoming/${taskId}/`); // Adjust the URL to your Django endpoint
+                const response = await fetch(`/index/todo_page/Upcoming/${taskId}/`);
                 const data = await response.json();
                 // Update the content based on the fetched data
                 taskTitleTextarea.value = data.title;
@@ -200,9 +205,79 @@
                 taskListSelect.value          = data.list;
                 taskProgress.value            = data.progress;
                 taskDueDateInput.value        = data.due_date;
-                }
-                );
+                document.getElementById('Delete-Btn').addEventListener('click', function () {
+                fetch(`/index/todo_page/delete/${taskId}/upcoming/`);
+                    console.log("Deleted");
+                });
+                document.getElementById('RightBarContent').setAttribute('task-id', taskId);
+
+                document.getElementById('Save-Btn').addEventListener('click', function () {
+                    let updatedTaskData = {
+            title: document.getElementById('Task-Title').value,
+            description: document.getElementById('Task-Description').value,
+            list: document.getElementById('select-L').value,
+            due_date: document.getElementById('dateSelect').value,
+            progress: document.getElementById('select-P').value
+        };
+        console.log(updatedTaskData);
+
+// Extract the CSRF token from the form
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+fetch('{% url "Save_Changes" 0 "upcoming" %}'.replace('0', parseInt(taskId)), {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,  // Include the CSRF token in the headers
+    },
+    body: JSON.stringify(updatedTaskData),
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+    // Redirect the user based on the source
+    if (data.redirect_url) {
+        window.location.href = data.redirect_url;
+    }
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+
+
+//         fetch(`/index/todo_page/save/${taskId}/upcoming/`, {
+//     method: 'POST',  // You can use 'GET' if your view supports it
+//     headers: {
+//         'Content-Type': 'application/json',
+//         // Add any other headers if needed
+//     },
+//     body: JSON.stringify(updatedTaskData),
+// })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         // Handle the response data as needed
+//         console.log(data);
+//     })
+//     .catch(error => {
+//         // Handle errors
+//         console.error('Fetch error:', error);
+//     });
+
+
+
+    });
+                
+
+
+                });
             });
+
+
 </script>
 
 

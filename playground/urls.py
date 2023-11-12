@@ -5,7 +5,8 @@ from . import views
 urlpatterns = [
     path('view_week/<YY>/<MM>/<DD>/', views.index,name='index'),
     path('todo_page/create/', views.create_todo_page, name='todo_page_create'),
-    path('todo_page/delete/<task_id>/', views.delete_todo, name='delete_todo'),
+    path('todo_page/delete/<int:task_id>/<str:source>/', views.handle_task, name='delete_todo'),
+    path('todo_page/save/<int:task_id>/<str:source>/', views.handle_task, name='Save_Changes'),
     path('todo_page/checked/<task_id>/', views.checked_done_todo, name='checked_done_todo'),
     path('todo_page/Upcoming', views.view_upcoming_page, name="upcoming_page"),
     path('todo_page/Upcoming/<task_id>/', views.get_task_data, name="get_task_data"),
