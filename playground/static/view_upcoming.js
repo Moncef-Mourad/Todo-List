@@ -6,9 +6,11 @@ var saveForm = document.getElementById("save-form");
 let taskTitleTextarea = document.getElementById("Task-Title");
 let taskDescriptionTextarea = document.getElementById("Task-Description");
 let taskListSelect = document.getElementById("select-L");
-let taskDueDateInput = document.getElementById("select-D");
+let taskDueDateInput = document.getElementById("dateSelect");
 let taskProgress = document.getElementById("select-P");
 var clicked = false;
+var src = window.location.pathname
+
 
 taskDivs.forEach(function (taskDiv) {
   taskDiv.addEventListener("click", async function () {
@@ -17,20 +19,18 @@ taskDivs.forEach(function (taskDiv) {
       document.querySelector(".RightBarBG").classList.toggle("show");
     }
 
-    let taskId = taskDiv.getAttribute("data-task-id");
+    var taskId = taskDiv.getAttribute("data-task-id");
 
     let response = await fetch(`/index/todo_page/Upcoming/${taskId}/`);
-    let data = await response.json();
+    var data = await response.json();
     // Update the content based on the fetched data
     taskTitleTextarea.value = data.title;
     taskDescriptionTextarea.value = data.description;
     taskListSelect.value = data.list;
     taskProgress.value = data.progress;
     taskDueDateInput.value = data.due_date;
-    document
-      .getElementById("Delete-Btn")
-      .addEventListener("click", function () {
-        fetch(`/index/todo_page/delete/${taskId}/upcoming/`);
+    document.getElementById("Delete-Btn").addEventListener("click", function () {
+        fetch(`/index/todo_page/delete/${taskId}/Upcoming/`);
         console.log("Deleted");
       });
     document.getElementById("RightBarContent").setAttribute("task-id", taskId);
@@ -50,7 +50,7 @@ taskDivs.forEach(function (taskDiv) {
       ).value;
 
       fetch(
-        '{% url "Save_Changes" 0 "upcoming" %}'.replace("0", parseInt(taskId)),
+        '/index/todo_page/save/0/Upcoming/'.replace("0",parseInt(taskId)),
         {
           method: "POST",
           headers: {
