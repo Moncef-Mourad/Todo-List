@@ -1,6 +1,7 @@
   {% extends 'base_layout.html' %}
   {% load static %}
-  {% block Selected_RecycleBin %}class="Selected"{% endblock %}
+  {% block style %}<link rel="stylesheet" href="{% static 'MainLight.css' %}" />{% endblock %}
+  {% block Selected_Today %}class="Selected"{% endblock %}
 
       <!-- ################################################""ACTIVE################################################"" -->
 
@@ -16,14 +17,12 @@
                  
                 
             </div>
-            <div class="Day">
-                    <p>Today</p>
-            </div> 
-            <div class="NumberBg">
-              <div class="Number">
-                    <p>3</p> 
-              </div>
-            </div>
+            <div class="Today-Div">
+                    <p class="Day">Today</p>
+                    <div class="NumberBg">
+                      <p class="Number">3</p> 
+                    </div>
+              </div> 
             <div class="ActiveTasks">
                 
                 <div class="Today-Tasks">
@@ -52,13 +51,12 @@
 
            
             <div class="Completed">
-                <p>Completed</p>
+                <p class="Completed-Txt">Completed</p>
+                <div class="NumberBg2">
+                          <p class="Number2">3</p> 
+                  </div>
             </div> 
-            <div class="NumberBg2">
-                <div class="Number2">
-                      <p>3</p> 
-                </div>
-              </div>
+            <div class="Completed-Tasks">
               {% for task in today_tasks %}{% if task.isDone %}
                     <div class="Completed-Task">
                         <svg class="isDone-Icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -72,10 +70,9 @@
                       </div>
                     </div>
                     
-                   
                     {%endif%}
                     {% endfor %}
-              
+              </div>  
               
 
 
@@ -84,6 +81,18 @@
 
         </div>
         
+        <script>
+          function toggleMode() {
+              const stylesheet = document.querySelector('link');
+              if (stylesheet.getAttribute('href') === '/playground/static/MainLight.css') {
+                stylesheet.setAttribute('href', '/playground/static/MainDark.css');
+                console.log(stylesheet.href);
+              } else {
+                stylesheet.setAttribute('href', '/playground/static/MainLight.css');
+                console.log(stylesheet.href);
+              }
+            }
+        </script>
 {% endblock %}      
 {% block script %}
 <script src="{% static 'RightSideBar.js' %}"></script>

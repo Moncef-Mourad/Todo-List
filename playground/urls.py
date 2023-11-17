@@ -14,7 +14,6 @@ urlpatterns = [
 
     path('index/todo_page/Upcoming', views.view_upcoming_page, name="upcoming_page"),
     path('index/todo_page/Today', views.view_today_page, name='today_page'),
-   
     path('index/todo_page/Calendar', views.view_calendar_page, name="calendar_page"),
     path('index/todo_page/StickyWall', views.view_stickywall_page, name="stickywall_page"),
     path('index/todo_page/RecycleBin', views.view_RecycleBin, name="RecycleBin_page"),

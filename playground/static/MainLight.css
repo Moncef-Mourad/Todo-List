@@ -28,24 +28,40 @@ a{
   border: none;
   border-radius: 5px;
 }
-
-
-
-
-
-
+svg{
+  fill: #000;
+}
 
 
 
 
   /* Left side bar css content Bellow */
 
-  .LeftBarBG{ grid-area: LeftBarBG;
+  .LeftBarBG { grid-area: LeftBarBG;
     flex-shrink: 0;
     border-radius: 20px;
     margin: 25px 30px;
-    background:#F5F5F5; }
+    background: #F5F5F5; 
+    overflow-y: auto;
+    /* WebKit-specific styles for scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f0f0f0;
+  }
 
+  .LeftBarBG::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .LeftBarBG::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 6px;
+  }
+  
+  .LeftBarBG::-webkit-scrollbar-track {
+    background-color: #0F172B;
+    border-radius: 6px;
+  }
+  
   .LeftBarContent{
     position: absolute;
     margin: 8%;
@@ -72,9 +88,7 @@ a{
  .menu-icon{
  }
  */
- p{
-  color: #000;
- }
+
 
   .Search-Bar{
     display: flex;
@@ -122,7 +136,17 @@ a{
     justify-items: center;
     color: #000;
     
-    
+  }
+  .li-elements{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+  }
+  .li-elements a{
+    display: flex;
+    align-items: center;
+    margin-bottom: 4%;
   }
  
 
@@ -137,8 +161,7 @@ a{
 
   .Selected{
     border-radius: 8px;
-    border: 1px solid var(--Color, #EBEBEB);
-    background: #EBEBEB;
+    border: 1px solid #000;
   }
 
 /*#########################################################*/
@@ -171,8 +194,8 @@ a{
 /* #############################" */
 
 .LeftBarContent3{
-  position: absolute;
-  height: auto;
+  display: flex;
+  flex-direction: column;
   margin:0% 8% 0% 8%;
 
 }
@@ -226,67 +249,91 @@ a{
   background:#EBEBEB;
   border:none;
 }
-.Day{
-  position:relative;
-  z-index: 0;
-  color: var(--Color, #202427);
-  font-family: Inter;
-  font-size: 50px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-top: -5%;
+.Today-Div{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 5%;
+  padding: 0%;
 }
-.Completed{
-  position:relative;
-  z-index: 0;
+.Day{
   color: var(--Color, #202427);
   font-family: Inter;
   font-size: 50px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-top: -5%;
+  margin: 0;
+  padding: 0%;
+
 }
 .NumberBg{
+  display: flex;
+  display: flex;
+  justify-content: center;
   background-color: #EBEBEB;
-  width:10% ;
-  height: 8% ;
-  margin-top: -17%;
-  margin-left: 28%;
-
+  padding: 0;
+  margin: 0%;
+  width: 10%;
 }
-.Number{
 
+.Number{
   color: var(--Color, #202427);
   font-family: Inter;
   font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+
+}
+
+.Completed{
+  display: flex;
+  margin-top: 5%;
+  padding: 0%;
+  align-items: center;
+  text-align: center;
+
+}
+
+.Completed-Tasks{
+  display: flex;
+  flex-direction: column;
+}
+
+.Completed-Task{
+  display: flex;
+  margin: 2% 0 2% 0;
+  width: 100%;
+  border-radius: 8px;
+  border-bottom: 1px solid #fafafa;
+  background: #EBEBEB;
+  align-items: center;
+}
+
+.Completed-Txt{
+  margin: 0;
+  color: var(--Color, #202427);
+  font-family: Inter;
+  font-size: 50px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  text-align: center;
-  margin-top: -70%;
-  margin-left: 0%;
+}
+.NumberBg, .NumberBg2{
+  margin-left: 5%;
 }
 .NumberBg2{
+  display: flex;
+  justify-content: center;
+  width: 10%;
   background-color: #EBEBEB;
-  width:10% ;
-  height: 8% ;
-  margin-top: -17%;
-  margin-left: 50%;
-
 }
 .Number2{
-
-  color: var(--Color, #48ff00);
-  font-family: Inter;
+  color: #48ff00;
   font-size: 40px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-align: center;
-  margin-top: -70%;
-  margin-left: 0%;
+  margin: 0;
+  padding: 0;
 }
 .Title{
   margin: 0%;
@@ -329,8 +376,7 @@ a{
 .isDone-Icon:hover{
   transform: scale(1.2);
 }
-.Arrow-Icon{
-  margin-right: 3%;
+.Arrow-Icon path{
   fill: #000;
   
 }
@@ -466,13 +512,11 @@ margin-top: 10%;
   display: flex;
   justify-content: space-between;
   align-items: end;
-  margin-top: 56%;
-
-  
+  align-content: center;
+  margin-top: 90%;
 }
 
 .Delete-Btn{
-  width: 48%;
   height: 35px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -488,7 +532,6 @@ margin-top: 10%;
 }
   
 .Save-Btn{
-  width: 48%;
   height: 35px;
   
   flex-shrink: 0;
@@ -538,11 +581,12 @@ margin-top: 10%;
 
 .Upcoming-Task{
   display: flex;
+  flex-direction: column;
   margin: 1% 0 1% 0;
   width: 100%;
   border-radius: 8px;
-  border-bottom: 1px solid #0F172B;
-  background: #1E293C;
+  border-bottom: 1px solid #F5F5F5;
+  background: #F5F5F5;
   align-items: center;
 }
 
@@ -556,6 +600,9 @@ margin-top: 10%;
 .task_txt_div:hover{
   cursor: pointer;
 }
+.task-txt{
+  width: 100%;
+}
 
 
 .isDone-Icon{
@@ -568,10 +615,24 @@ margin-top: 10%;
 }
 .Arrow-Icon{
   margin-right: 3%;
-  
 }
-
-
+.infoSup-div{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 2%;
+}
+.infoSup-Icons{
+  margin-left: 10%;
+  margin-right: 2%;
+}
+.infoSup-txts{
+  margin:0;
+  font-size: 14px;
+}
+p, h1{
+  color: #000;
+ }
   /* For presentation only, no need to copy the code below */
   
   .container * {
