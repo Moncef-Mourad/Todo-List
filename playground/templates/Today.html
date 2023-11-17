@@ -188,11 +188,11 @@
 
         <div class="RightBarBG">
             <div class="RightBarContent">
-                <label class="Taskk">Task:</label>
+                <label>Task:</label>
                 <textarea class="Task-Title" placeholder="Task Title" rows="2"></textarea>
                 <textarea class="Task-Description" placeholder="Description" rows="8"></textarea>
                 <div class="Select-Options">
-                    <div  class="Select-List">
+                    <div class="Select-List">
                         <label class="User-Options">List:</label>
                         <select class="select-L">
                             <option >Personal</option>
@@ -200,11 +200,11 @@
                             <option>List 1</option>
                         </select>
                     </div>
-                    <div  class="Select-DueDate" for="Select-DueDate">
+                    <div class="Select-DueDate" for="Select-DueDate">
                         <label class="User-Options" for="dateSelect">Due Date:</label>
                         <input id="dateSelect" class="select-D">
                     </div>
-                    <div  class="Select-TaskProgress">
+                    <div class="Select-TaskProgress">
                         <label class="User-Options" for="progress-select">Progress:</label>
                         <select class="select-P">
                             <option>In Progress</option>
@@ -226,60 +226,9 @@
 
 <!-- <script src="#"></script> -->
 <script>
-     function toggleMode() {
-            
-            const stylesheet = document.querySelector('link[rel="stylesheet"]');
-            
-            console.log (stylesheet);
-            const currentHref = stylesheet.getAttribute('href');
-            
-            // Check if it's the light mode, then switch to dark, and vice versa
-            if (currentHref === '{% static "MainLight.css" %}') {
-                stylesheet.setAttribute('href', '{% static "MainDark.css" %}');
-            } else {
-                stylesheet.setAttribute('href', '{% static "MainLight.css" %}');
-            }
-        }
-    $("#dateSelect").datepicker();
-    const taskDivs = document.querySelectorAll('.task_txt_div');
-    const rightBarBG = document.querySelector('.RightBarBG');
-
-    var clicked = false
-    taskDivs.forEach(function(taskDiv) {
-            taskDiv.addEventListener('click', async function() {
-                if(!clicked){
-                    clicked = true
-                    document.querySelector('.RightBarBG').classList.toggle('show');}
-
-
-                    let taskTitleTextarea = document.getElementsByClassName('Task-Title')[0];
-                    let taskDescriptionTextarea = document.getElementsByClassName('Task-Description')[0];
-                    let taskListSelect = document.getElementsByClassName('select-L')[0];
-                    let taskDueDateInput = document.getElementsByClassName('select-D')[0];
-                    let taskProgress = document.getElementsByClassName('select-P')[0];
-
-
-                const taskId = taskDiv.getAttribute('data-task-id');
-                const response = await fetch(`/index/todo_page/Today/${taskId}/`); // Adjust the URL to your Django endpoint
-                const data = await response.json();
-                // Update the content based on the fetched data
-                taskTitleTextarea.value = data.title;
-                taskDescriptionTextarea.value = data.description;
-                taskListSelect.value          = data.list;
-                taskProgress.value            = data.progress;
-                taskDueDateInput.value        = data.due_date;
-                }
-                );
-            }); 
-           
-           
-
-  
-            
-      
-
-    
+    $(function() {
+        $("#dateSelect").datepicker();
+    });
 </script>
-
 </body>
-</html>   
+</html>

@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from .models import Todo
+from .models import Todo,DeletedTask,ModificationHistory
 from datetime import datetime, timedelta
-from django.http import JsonResponse
+from django.http import JsonResponse   
+import json 
 
 # Create your views here.
 #request -> response 
@@ -50,26 +51,63 @@ def create_todo_page(request):
     return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
 
 
-def delete_todo(request,task_id):
-    if request.method == 'POST':
-        # Use get_object_or_404 to get the specific Todo item
-        task = get_object_or_404(Todo, id=task_id)
-        # Delete the item
-        task.delete()
-    
-    # After deletion, you can redirect to the same page or a different page as needed.
-    return redirect('todo_page_create')
+def handle_task(request, task_id, source):
+    task = get_object_or_404(Todo, id=task_id)
+    # task_in_recycle = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
+    # Your logic for handling the task based on the source (e.g., delete or save changes)
+
+        
 
 
-def checked_done_todo(request,task_id):
-    if request.method == 'POST':
+
+    if '/todo_page/delete/' in request.path:
+        if source == 'RecycleBin':
+            # task_in_recycle.delete()
+            task.delete()
+        # Logic for delete
+        elif source == 'Upcoming' or source == 'Today':
+            task.is_in_recycle_bin = True
+            task.save()
+            DeletedTask.objects.create(original_task=task)
+            # generate_notification("Task Delete Successfully!")
+    elif '/todo_page/save/' in request.path:
+        # Logic for save changes
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            task.task_Text = data.get('title', task.task_Text)
+            task.task_Descr = data.get('description', task.task_Descr)
+            task.due_date = data.get('due_date', task.due_date)
+            task.task_Progress = data.get('progress', task.task_Progress)
+            task.task_List = data.get('list', task.task_List)
+            task.save()
+
+    # Redirect the user to the appropriate page based on the source
+    if source == 'Upcoming':
+        return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('upcoming_page')})
+        # return redirect(reverse('upcoming_page'))
+    elif source == 'Today':
+        return redirect('today_page')
+    elif source == 'Calendar':
+        return redirect('calendar_page')
+    elif source =='RecycleBin':
+        return redirect('RecycleBin_page')
+    else:
+        # Handle other cases or provide a default redirect
+        return redirect('index')
+
+
+
+def checked_done_todo(request,src,task_id):
         # Use get_object_or_404 to get the specific Todo item
+    if src  == 'RecycleBin':
+        task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
+    elif src == 'Upcoming':
         task = get_object_or_404(Todo, id=task_id)
-        # mark the checking box
-        task.isDone= not task.isDone
-        task.save()
+    # mark the checking box
+    task.isDone = not task.isDone
+    task.save()
     # After deletion, you can redirect to the same page or a different page as needed.
-    return redirect('todo_page_create')
+    # return redirect(request.path)
 
 
 
@@ -95,15 +133,20 @@ def view_upcoming_page(request):
 
     return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,})
 
-def get_task_data(request, task_id):
-    task = get_object_or_404(Todo, id=task_id)
+
+
+
+def get_task_data(request, src,task_id):
+    if '/todo_page/Upcoming' in request.path:
+        task = get_object_or_404(Todo, id=task_id)
+    elif '/todo_page/RecycleBin' in request.path:
+        task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     data = {
         'title': task.task_Text,
         'description': task.task_Descr,
         'list': task.task_List,
         'progress': task.task_Progress,
-        'due_date': task.due_date,
-
+        'due_date': task.due_date
     }
     return JsonResponse(data)
 
@@ -114,3 +157,15 @@ def view_calendar_page(request):
 
 def view_stickywall_page(request):
     return render(request, 'StickyWall.html')
+
+def view_RecycleBin(request):
+    Recycled_Tasks = DeletedTask.objects.all()
+    return render(request, 'RecycleBin.html',{'Recycled_Tasks':Recycled_Tasks})
+
+
+
+
+
+# other functionalities:
+
+
