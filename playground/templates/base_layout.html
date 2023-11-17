@@ -55,9 +55,8 @@
           <div class="Tasks">
             <ul class="Tasks-List">
               <p>Tasks</p>
-              <li {% block Selected_Upcoming %}{% endblock %}>
-                <a href="{% url 'upcoming_page' %}"
-                  ><svg
+              <li class="li-elements" {% block Selected_Upcoming %}{% endblock %}>
+                <a href="{% url 'upcoming_page' %}"><svg
                     class="Tasks-Icons"
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -82,7 +81,7 @@
                 >
               </li>
 
-              <li {% block Selected_Today %}{% endblock %}>
+              <li class="li-elements" {% block Selected_Today %}{% endblock %}>
                 <a href="{% url 'today_page' %}">
                   <svg
                     class="Tasks-Icons"
@@ -100,7 +99,7 @@
                   Today</a
                 >
               </li>
-              <li {% block Selected_Calendar %}{% endblock %}>
+              <li class="li-elements" {% block Selected_Calendar %}{% endblock %}>
                 <a href="{% url 'calendar_page' %}">
                   <svg
                     class="Tasks-Icons"
@@ -118,7 +117,7 @@
                   Calendar</a
                 >
               </li>
-              <li {% block Selected_StickyWall %}{% endblock %}>
+              <li class="li-elements"  {% block Selected_StickyWall %}{% endblock %}>
                 <a href="{% url 'stickywall_page' %}">
                   <svg
                     class="Tasks-Icons"
@@ -143,24 +142,16 @@
           <div class="Lists">
             <ul class="Lists-List">
               <p>Lists</p>
-              <li>
-                <a href="#"
-                  ><svg class="Lists-Icons" style="background: #dc5d5d"></svg>
-                  Personal</a
-                >
+              <li class="li-elements" id="List-Info" >
+                <a href="#"><svg class="Lists-Icons" style="background: #dc5d5d"></svg>Personal</a>
               </li>
-              <li>
-                <a href="#"
-                  ><svg class="Lists-Icons" style="background: #00c2ff">
-                    </svg>Work</a
-                >
+              <li class="li-elements" id="List-Info" >
+                <a href="#"><svg class="Lists-Icons" style="background: #00c2ff"></svg>Work</a>
               </li>
-              <li>
-                <a href="#"
-                  ><svg class="Lists-Icons" style="background: #fff500"></svg>List 1</a
-                >
+              <li class="li-elements" id="List-Info" >
+                <a href="#"><svg class="Lists-Icons" style="background: #fff500"></svg>List 1</a>
               </li>
-              <li>
+              <li class="li-elements" >
                 <a href="#"
                   ><svg
                     class="Lists-Icons"
@@ -184,14 +175,14 @@
         <div class="LeftBarContent3">
           <div class="Options">
             <ul class="Options-List">
-                <li class="op">
+                <li  class="li-elements" >
                     <a href="{% url 'RecycleBin_page' %}" {% block Selected_RecycleBin %}{% endblock %}>
                         <svg class="Options-Icons" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 24" fill="none">
                             <path d="M0.436098 2.32801C0.199965 2.32801 0.00732422 2.52104 0.00732422 2.75717V4.86036H20.0073V2.75717C20.0073 2.52104 19.8147 2.32801 19.5786 2.32801H12.6679V1.25509C12.6679 0.877279 12.3593 0.568237 11.9811 0.568237H8.11895C7.74072 0.568237 7.4321 0.877279 7.4321 1.25509V2.32801H0.436098ZM1.59475 5.97639C1.24055 5.97639 0.919498 6.2672 0.950998 6.62015L2.36775 22.3719C2.39925 22.7244 2.6582 23.0152 3.01152 23.0152H17.132C17.4853 23.0152 17.7438 22.7236 17.7757 22.3719L19.2124 6.62017C19.2443 6.26845 18.9228 5.97639 18.569 5.97639H1.59479H1.59475ZM12.6256 8.42299H14.4281V20.3541H12.6256V8.42299ZM5.50082 8.42299H7.30329V20.3541H5.5008V8.42301L5.50082 8.42299ZM9.06304 8.42299H10.8659V20.3541H9.06304V8.42299Z" fill="white"/>
                           </svg>Recycle Bin
                     </a>
                   </li>
-              <li class="op">
+              <li  class="li-elements" >
                 <a href="#">
                   <svg
                     class="Options-Icons"
@@ -207,7 +198,7 @@
                     /></svg>Settings
                 </a>
               </li>
-              <li class="op">
+              <li  class="li-elements">
                 <a href="#">
                   <svg
                     class="Options-Icons"
@@ -283,9 +274,7 @@
                   Delete Task
                 </button>
               </form>
-              <button id="Save-Btn" class="Save-Btn" type="submit">
-                Save Changes
-              </button>
+              <button id="Save-Btn" class="Save-Btn" type="submit">{% block SecondBtn %}{% endblock %}Save Changes</button>
             </div>
           </div>
         </div>
