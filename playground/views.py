@@ -113,7 +113,16 @@ def checked_done_todo(request,src,task_id):
 
 
 
-#URLS for the Html's
+#URLS for the Html's 
+def view_today_page(request):
+     
+    current_date = datetime.now().date()
+    formatted_today = current_date.strftime('%b %d, %Y')
+    today_tasks = Todo.objects.filter(due_date=current_date)
+
+    
+    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date})
+
 
 def view_upcoming_page(request):
 
@@ -141,8 +150,7 @@ def get_task_data(request, src,task_id):
     }
     return JsonResponse(data)
 
-def view_today_page(request):
-    return render(request, 'Today.html')
+
 
 def view_calendar_page(request):
     return render(request, 'Calendar.html')

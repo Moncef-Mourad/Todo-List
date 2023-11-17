@@ -1,0 +1,570 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+.container {
+    display: grid; 
+    grid-template-columns: 0.8fr 1.3fr 0.9fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "LeftBarBG Active RightBarBG"; 
+  }
+    
+    .Active { grid-area: Active; }
+  a{
+    text-decoration: none;
+    color: #FFF;
+  }
+  .toggleBtn{
+    cursor: pointer;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+
+  
+  
+  
+    /* Left side bar css content Bellow */
+  
+    .LeftBarBG{ grid-area: LeftBarBG;
+      flex-shrink: 0;
+      border-radius: 20px;
+      margin: 25px 30px;
+      background: #1E293C; }
+  
+    .LeftBarContent{
+      position: absolute;
+      margin: 8%;
+      display: flex;
+      flex-direction: column;
+    }
+    .Menu{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }  
+    .Menu p{
+      margin: 0 0 5% 0;
+      padding: 0;
+      /* flex-shrink: 0; */
+      color: var(--Color, #FFF);
+      font-family: Inter;
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  /* .menu-icon{
+      Change its color when Light mode toggled
+    }   */
+  
+    .Search-Bar{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 2em;
+      flex-shrink: 0;   
+      border-radius: 8px;
+      border: 1px solid var(--Color, #FFF);
+      background: #0F172B;
+    }
+  
+    .Search-Bar svg{
+      margin-left: 3%;
+      fill: #FFF;
+    }
+  
+    .Search-Bar input{
+      margin: 0;
+      padding: 0;
+      color: #FFF;
+      width: 86%;
+      height: 20px;
+      border: none;
+      flex-shrink: 0;
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      background: #0F172B;
+    }
+  
+    /* .Tasks{
+      margin: 0;
+    } */
+  
+    .Tasks-List{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      justify-items: center;
+      color: #fff;
+      
+      
+    }
+   
+  
+  
+    .Tasks-Icons, .Lists-Icons, .Options-Icons{
+      margin-left: 3%;
+      margin-right: 3%;
+      fill: #FFF; }
+  
+  
+    .Selected{
+      border-radius: 8px;
+      border: 1px solid var(--Color, #FFF);
+      background: #1E293C;
+    }
+  
+  /*#########################################################*/
+    .Line{
+      width: 100%;
+      height: 1px;
+      background: #FFF;
+    }
+  /*#########################################################*/
+    
+  .LeftBarContent2{
+    margin: 0% 8% 8% 8%;
+    /* padding: 0; */
+  }
+  
+    .Lists-List{
+      padding: 0;
+      margin: 0%;
+      list-style: none;
+    }
+  
+  
+    .Lists-Icons{
+      border-radius: 5px;
+      /* padding: 0%; */
+      width: 20px;
+      height: 20px;
+    }
+    
+  /* #############################" */
+  
+  .LeftBarContent3{
+    position: absolute;
+    height: auto;
+    margin:0% 8% 0% 8%;
+  
+  }
+  
+  .Options-List{
+    padding: 0;
+    list-style: none;
+  }
+  /*##########################*/
+  /*middle part css*/
+  .Active{
+    position: absolute;
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+  .AddNewTask{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    border: 1px solid #0F172B;
+    background: #1E293C;
+   
+    
+  }
+  .AddNewTask svg{
+    margin-left: 3%;
+    margin-right: 3%;
+    fill: #fff ;
+  }
+  .AddNewTask input{
+    position:relative;
+    z-index: 1;
+    display: flex;
+    width: 444px;
+    height: 43.636px;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    color: #FFF;
+    border: none;
+    flex-shrink: 0;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background:#1E293C;
+    border:none;
+  }
+  .Day{
+    position:relative;
+    z-index: 0;
+    color: var(--Color, #FFF);
+    font-family: Inter;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: -5%;
+  }
+  .Completed{
+    position:relative;
+    z-index: 0;
+    color: var(--Color, #FFF);
+    font-family: Inter;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: -5%;
+  }
+  .NumberBg{
+    background-color: #1E293C;
+    width:10% ;
+    height: 8% ;
+    margin-top: -17%;
+    margin-left: 28%;
+  
+  }
+  .Number{
+  
+    color: var(--Color, #FFF);
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-top: -70%;
+    margin-left: 0%;
+  }
+  .NumberBg2{
+    background-color: #1E293C;
+    width:10% ;
+    height: 8% ;
+    margin-top: -17%;
+    margin-left: 50%;
+  
+  }
+  .Number2{
+  
+    color: var(--Color, #FFF);
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-top: -70%;
+    margin-left: 0%;
+  }
+  .Title{
+    margin: 0%;
+  }
+  
+  .Today-Tasks{
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  .Today-Task{
+    display: flex;
+    margin: 2% 0 2% 0;
+    width: 100%;
+    border-radius: 8px;
+    border-bottom: 1px solid #0F172B;
+    background: #1E293C;
+    align-items: center;
+  }
+  
+  
+  .task_txt_div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .task_txt_div:hover{
+    cursor: pointer;
+  }
+  
+  
+  .isDone-Icon{
+    margin-left: 3%;
+    margin-right: 3%;
+    transition: transform 0.3s ease-in-out;
+    fill: #FFF;
+  }
+  .isDone-Icon:hover{
+    transform: scale(1.2);
+    fill: #FFF;
+  }
+  .Arrow-Icon{
+    margin-right: 3%;
+    fill: #FFF;
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+    /* right side bar css content Bellow */
+  
+    .RightBarBG { grid-area: RightBarBG;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      background: #1E293C; 
+      margin: 25px 30px;
+  
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      transition: width 0.5s;
+    
+    }
+  
+    .RightBarBG.show {
+      width: 90%;
+      max-width: 90%; 
+  }
+  
+      .RightBarContent{
+        display: flex;
+        flex-direction: column;
+        margin: 8%;
+    
+      }  
+      .Taskk{
+        color: #fff;
+      }
+  
+  .Task-Title{
+    margin-top: 5%;
+    margin-bottom: 10%;
+    border-radius: 5px;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    resize: none;
+    border: 1px solid #0F172B;
+    background: #0F172B;
+    
+  }
+  .Task-Title::placeholder, .Task-Description::placeholder{
+    color: #FFF;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  
+  }
+  
+  .Task-Description{
+    color: #FFF;
+    border-radius: 5px;
+    resize: none;
+    border: 1px solid #0F172B;
+    background: #0F172A;
+  }
+  
+  
+  /* select, input{
+    display: flex;
+    flex-direction: column;
+  } */
+  
+  
+  
+  
+  
+  /* .Select-Options{
+    display: flex;
+    flex-direction: column;
+  } */
+  
+  
+  .User-Options{
+    display: inline-block;
+    width: 100px;
+  }
+  
+  .Select-List{
+  margin-top: 10%;
+  }
+  /* .Select-List select{
+    margin-left: 15%;
+  } */
+  
+  .Select-DueDate, .Select-Progress, .Select-List{
+    margin-bottom: 5%;
+  }
+  
+  .select-L, .select-D, .select-P{
+    width: 35%;
+    border-radius: 5px;
+    color: var(--Color, #ff0000);
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border: 1px solid #0F172B;
+    background: #0F172B;
+  }
+  
+  
+  
+  
+  .Task-Buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 56%;
+  
+    
+  }
+  
+  .Delete-Btn{
+    width: 48%;
+    height: 35px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0F172B;
+    background: #F8F7FF;
+  
+    color: var(--Color-7, #000);
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+    
+  .Save-Btn{
+    width: 48%;
+    height: 35px;
+    
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0F172B;
+    background: #9EFF00;
+  
+    color: #000;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  
+  
+  
+    html, body, .container {
+      height: 100%;
+      margin: 0;
+      background: #0F172B;
+      color: #FFF;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+    }
+    
+    
+  
+  /* Active-Bar css  */
+  
+  .Active{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .Title{
+    margin: 0%;
+  }
+  
+  .Upcoming-Tasks{
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  .Upcoming-Task{
+    display: flex;
+    margin: 1% 0 1% 0;
+    width: 100%;
+    border-radius: 8px;
+    border-bottom: 1px solid #0F172B;
+    background: #1E293C;
+    align-items: center;
+  }
+  
+  
+  .task_txt_div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .task_txt_div:hover{
+    cursor: pointer;
+  }
+  
+  
+  .isDone-Icon{
+    margin-left: 3%;
+    margin-right: 3%;
+    transition: transform 0.3s ease-in-out;
+  }
+  .isDone-Icon:hover{
+    transform: scale(1.2);
+  }
+  .Arrow-Icon{
+    margin-right: 3%;
+    
+  }
+  
+  
+    /* For presentation only, no need to copy the code below */
+    
+    .container * {
+      /* border: 1px solid gray; */
+      position: relative;
+    }
+    /*
+    .container *:after {
+      content:attr(class);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+    } */
+    

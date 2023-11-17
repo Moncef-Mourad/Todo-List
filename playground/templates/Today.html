@@ -1,17 +1,16 @@
-{% extends 'base_layout.html' %}
-
-{% block Selected_Today %}class="Selected"{% endblock %}
+  {% extends 'base_layout.html' %}
+  {% load static %}
+  {% block Selected_RecycleBin %}class="Selected"{% endblock %}
 
       <!-- ################################################""ACTIVE################################################"" -->
 
-{% block Active %}  
-
+{% block Active %}      
         <div class="Active">
             <div class="AddNewTask">
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
-                    <path d="M17.5 7.29167V27.7083" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M7.29175 17.5H27.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" >
+                    <path d="M17.5 7.29167V27.7083" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7.29175 17.5H27.7084" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                  <input placeholder="Add New Task">
                  
@@ -22,19 +21,73 @@
             </div> 
             <div class="NumberBg">
               <div class="Number">
-                    <p>11</p>
+                    <p>3</p> 
               </div>
             </div>
-            
-          
             <div class="ActiveTasks">
+                
+                <div class="Today-Tasks">
+                    {% for task in today_tasks %}{% if not task.isDone %}
+                    <div class="Today-Task">
+                        <svg class="isDone-Icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M3.53811 0C1.59417 0 0 1.58715 0 3.54143L0 16.4586C0 18.4129 1.59417 20 3.53811 20H16.4619C18.4058 20 20 18.4129 20 16.4586V3.54143C20 1.58715 18.4058 0 16.4619 0L3.53811 0ZM3.53811 1.42286H16.4619C17.6569 1.42286 18.5884 2.35715 18.5884 3.54143V16.4586C18.5884 17.6429 17.6569 18.5771 16.4619 18.5771H3.53811C3.25981 18.5819 2.9834 18.5305 2.72503 18.4261C2.46665 18.3217 2.23151 18.1662 2.03344 17.9689C1.83538 17.7716 1.67843 17.5364 1.57164 17.277C1.46485 17.0177 1.41043 16.7394 1.4116 16.4586V3.54143C1.4116 2.35715 2.34315 1.42286 3.53811 1.42286Z" />
+                        </svg>
+                      <div class="task_txt_div" data-task-id="{{task.id}}">
+                          <p >{{ task.task_Text }}</p>
+                          <svg class="Arrow-Icon" xmlns="http://www.w3.org/2000/svg" width="17" height="30" viewBox="0 0 17 30" fill="none">
+                            <path d="M1.00388 30C0.749215 30 0.488593 29.8994 0.293156 29.7039C-0.0977186 29.3131 -0.0977186 28.6734 0.293156 28.2825L13.6719 14.8979L0.488593 1.71458C0.0977188 1.32368 0.0977188 0.68403 0.488593 0.293156C0.879467 -0.0977185 1.51909 -0.0977185 1.90996 0.293156L15.8039 14.1871C16.1948 14.578 16.1948 15.2176 15.8039 15.6085L1.71452 29.7038C1.51909 29.8993 1.25852 30 1.00385 30L1.00388 30Z" />
+                          </svg>
+                      </div>
+                    </div>
+                    
+                   
+                    {%endif%}
+                    {% endfor %}
+                    
+                </div>
+                
+                
 
             </div>
-                
-                
 
-            
+           
+            <div class="Completed">
+                <p>Completed</p>
+            </div> 
+            <div class="NumberBg2">
+                <div class="Number2">
+                      <p>3</p> 
+                </div>
+              </div>
+              {% for task in today_tasks %}{% if task.isDone %}
+                    <div class="Completed-Task">
+                        <svg class="isDone-Icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M3.53811 0C1.59417 0 0 1.58715 0 3.54143L0 16.4586C0 18.4129 1.59417 20 3.53811 20H16.4619C18.4058 20 20 18.4129 20 16.4586V3.54143C20 1.58715 18.4058 0 16.4619 0L3.53811 0ZM3.53811 1.42286H16.4619C17.6569 1.42286 18.5884 2.35715 18.5884 3.54143V16.4586C18.5884 17.6429 17.6569 18.5771 16.4619 18.5771H3.53811C3.25981 18.5819 2.9834 18.5305 2.72503 18.4261C2.46665 18.3217 2.23151 18.1662 2.03344 17.9689C1.83538 17.7716 1.67843 17.5364 1.57164 17.277C1.46485 17.0177 1.41043 16.7394 1.4116 16.4586V3.54143C1.4116 2.35715 2.34315 1.42286 3.53811 1.42286Z" />
+                        </svg>
+                      <div class="task_txt_div" data-task-id="{{task.id}}">
+                          <p >{{ task.task_Text }}</p>
+                          <svg class="Arrow-Icon" xmlns="http://www.w3.org/2000/svg" width="17" height="30" viewBox="0 0 17 30" fill="none">
+                            <path d="M1.00388 30C0.749215 30 0.488593 29.8994 0.293156 29.7039C-0.0977186 29.3131 -0.0977186 28.6734 0.293156 28.2825L13.6719 14.8979L0.488593 1.71458C0.0977188 1.32368 0.0977188 0.68403 0.488593 0.293156C0.879467 -0.0977185 1.51909 -0.0977185 1.90996 0.293156L15.8039 14.1871C16.1948 14.578 16.1948 15.2176 15.8039 15.6085L1.71452 29.7038C1.51909 29.8993 1.25852 30 1.00385 30L1.00388 30Z" />
+                          </svg>
+                      </div>
+                    </div>
+                    
+                   
+                    {%endif%}
+                    {% endfor %}
+              
+              
+
+
+            <button class ="toggleBtn"  id="toggle-btn" onclick="toggleMode()">Toggle Dark/Light Mode</button>
+
 
         </div>
+        
+{% endblock %}      
+{% block script %}
+<script src="{% static 'RightSideBar.js' %}"></script>
+<script src="{% static 'ListIconColor.js' %}"></script>
+{% endblock %}
 
-{% endblock %}        
+        
