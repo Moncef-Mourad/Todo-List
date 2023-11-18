@@ -8,8 +8,8 @@ class Todo(models.Model):
     date_created = models.DateField()
     due_date = models.DateField(default='0000-00-00')   
     task_Text = models.CharField(max_length=50) 
-    task_Descr = models.CharField(default='Default Decr',max_length=150)
-    task_List = models.CharField(default='List', max_length=10) 
+    task_Descr = models.CharField(default='Default Decription',max_length=150)
+    task_List = models.CharField(default='List 1', max_length=10) 
     task_Progress = models.CharField(default='Incomplete',max_length=15)
     isDone = models.BooleanField(default=False)
 

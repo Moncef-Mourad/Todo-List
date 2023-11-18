@@ -275,7 +275,10 @@
                   Delete Task
                 </button>
               </form>
-              <button id="Save-Btn" class="Save-Btn" type="submit">{% block SecondBtn %}{% endblock %}Save Changes</button>
+              <form method="post" id="save-form">
+                {% csrf_token %}
+                <button id="Save-Btn" class="Save-Btn" type="submit">{% block SecondBtn %}{% endblock %}Save Changes</button>
+              </form>
             </div>
           </div>
         </div>

@@ -50,15 +50,23 @@ def create_todo_page(request):
     all_tasks = Todo.objects.all() 
     return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
 
+def create_task(request):
+    if '/todo_page/create/' in request.path:
+        curr_date = datetime.now().date()
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            txt = data.get('title')
+            Descr = data.get('description')
+            due_date = data.get('due_date')
+            Progress = data.get('progress')
+            List = data.get('list')
+        new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress,task_List=List, date_created=curr_date)
+        new_Task.save()
 
 def handle_task(request, task_id, source):
     task = get_object_or_404(Todo, id=task_id)
     # task_in_recycle = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     # Your logic for handling the task based on the source (e.g., delete or save changes)
-
-        
-
-
 
     if '/todo_page/delete/' in request.path:
         if source == 'RecycleBin':
@@ -81,6 +89,7 @@ def handle_task(request, task_id, source):
             task.task_List = data.get('list', task.task_List)
             task.save()
 
+
     # Redirect the user to the appropriate page based on the source
     if source == 'Upcoming':
         return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('upcoming_page')})
@@ -101,7 +110,7 @@ def checked_done_todo(request,src,task_id):
         # Use get_object_or_404 to get the specific Todo item
     if src  == 'RecycleBin':
         task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
-    elif src == 'Upcoming':
+    elif src == 'Upcoming' or src=='Today':
         task = get_object_or_404(Todo, id=task_id)
     # mark the checking box
     task.isDone = not task.isDone
@@ -128,7 +137,7 @@ def view_upcoming_page(request):
 
     current_date = datetime.now().date()
     next_day = current_date + timedelta(days=1)
-    formatted_next_day = next_day.strftime('%b %d, %Y')
+    formatted_next_day = next_day.strftime('%b %d, %y')
     upcoming_tasks = Todo.objects.filter(due_date=next_day)
 
     return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,})
@@ -137,7 +146,7 @@ def view_upcoming_page(request):
 
 
 def get_task_data(request, src,task_id):
-    if '/todo_page/Upcoming' in request.path:
+    if '/todo_page/Upcoming' in request.path or '/todo_page/Today' in request.path:
         task = get_object_or_404(Todo, id=task_id)
     elif '/todo_page/RecycleBin' in request.path:
         task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
