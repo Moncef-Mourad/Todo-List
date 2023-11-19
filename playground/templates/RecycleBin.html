@@ -1,6 +1,6 @@
 {% extends 'base_layout.html' %}
 {% load static %}
-{% block Selected_RecycleBin %}class="Selected"{% endblock %}
+{% block Selected_RecycleBin %}id="Selected"{% endblock %}
 
       <!-- ################################################""ACTIVE################################################"" -->
 
@@ -46,6 +46,5 @@
 {% block SecondBtn %}Restore Task{% endblock %}
 
 {% block script %}
-<script src="{% static 'RightSideBar.js' %}"></script>
 <script src="{% static 'ListIconColor.js' %}"></script>
 {% endblock %}
