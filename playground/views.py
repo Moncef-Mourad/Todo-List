@@ -62,6 +62,8 @@ def create_task(request):
             List = data.get('list')
         new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress,task_List=List, date_created=curr_date)
         new_Task.save()
+    return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('create_task')})
+    
 
 def handle_task(request, task_id, source):
     task = get_object_or_404(Todo, id=task_id)
@@ -141,9 +143,10 @@ def view_today_page(request):
             tasks_NotDone_NotInRecycleBin+=1
         elif task.isDone and not task.is_in_recycle_bin:
             tasks_Done_NotInRecycleBin+=1
+    print(tasks_Done_NotInRecycleBin)        
 
     
-    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
+    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
 
 
 def view_upcoming_page(request):
