@@ -22,12 +22,22 @@ for (let btn of CheckBtns) {
     var taskId= btn.getAttribute("task_id"); 
     console.log(taskId);
 
-        fetch(`${src}/checked/0/`.replace("0", parseInt(taskId)));
-          window.location.assign(window.location.href);
-
+        fetch(`${src}/checked/0/`.replace("0", parseInt(taskId)))
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // Redirect the user based on the source
+          if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
   });
-}
 
+
+}
 
  if(src != 'RecycleBin'){
 var AddNewTask_Label = document.querySelector('.AddNewTask');
@@ -54,6 +64,7 @@ AddNewTask_Label.addEventListener('click',function(){
         list: document.getElementById("select-L").value,
         due_date: modifiedString,
         progress: document.getElementById("select-P").value,
+        curr_url:window.location.pathname
       };
       // Extract the CSRF token from the form
       let csrfToken = document.querySelector(
@@ -126,12 +137,24 @@ taskDivs.forEach(function (taskDiv) {
               "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
             }
           }
-          )})
+          ).then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            // Redirect the user based on the source
+            if (data.redirect_url) {
+              window.location.href = data.redirect_url;
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+        })
         
         }
     else if ( src == 'Upcoming' || src == 'Today' ){
 
       document.getElementById("Save-Btn").addEventListener("click", function () {
+        console.log(window.location.href);
         let updatedTaskData = {
           title: document.getElementById("Task-Title").value,
           description: document.getElementById("Task-Description").value,
@@ -189,7 +212,18 @@ taskDivs.forEach(function (taskDiv) {
     
 
     DeleteBtn.addEventListener("click", function () {
-        fetch(`/index/todo_page/delete/${taskId2}/${src}/`);
+        fetch(`/index/todo_page/delete/${taskId2}/${src}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // Redirect the user based on the source
+          if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
         console.log("Deleted");
       });
       

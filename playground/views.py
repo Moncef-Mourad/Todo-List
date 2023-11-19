@@ -60,9 +60,12 @@ def create_task(request):
             due_date = data.get('due_date')
             Progress = data.get('progress')
             List = data.get('list')
-        new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress,task_List=List, date_created=curr_date)
-        new_Task.save()
-    return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('create_task')})
+            curr_URL = data.get('curr_url')
+            print(txt)
+            print(curr_URL)
+            new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress,task_List=List, date_created=curr_date)
+            new_Task.save()
+    return JsonResponse({'message': 'Data received successfully!', 'redirect_url': curr_URL})
     
 
 def handle_task(request, task_id, source):
@@ -102,13 +105,12 @@ def handle_task(request, task_id, source):
     # Redirect the user to the appropriate page based on the source
     if source == 'Upcoming':
         return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('upcoming_page')})
-        # return redirect(reverse('upcoming_page'))
     elif source == 'Today':
-        return redirect('today_page')
+        return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('today_page')})
     elif source == 'Calendar':
         return redirect('calendar_page')
     elif source =='RecycleBin':
-        return redirect('RecycleBin_page')
+        return JsonResponse({'message': 'Data restored successfully!', 'redirect_url': reverse('RecycleBin_page')})
     else:
         # Handle other cases or provide a default redirect
         return redirect('index')
@@ -121,11 +123,17 @@ def checked_done_todo(request,src,task_id):
         task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     elif src == 'Upcoming' or src=='Today':
         task = get_object_or_404(Todo, id=task_id)
+
     # mark the checking box
     task.isDone = not task.isDone
     task.save()
     # After deletion, you can redirect to the same page or a different page as needed.
-    # return redirect(request.path)
+    if src == 'Today':
+        return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('today_page')})
+    elif src == 'Upcoming':
+        return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('upcoming_page')})
+    elif src == 'RecycleBin':
+        return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('RecycleBin_page')})
 
 
 
@@ -142,9 +150,7 @@ def view_today_page(request):
         if not task.isDone and not task.is_in_recycle_bin:
             tasks_NotDone_NotInRecycleBin+=1
         elif task.isDone and not task.is_in_recycle_bin:
-            tasks_Done_NotInRecycleBin+=1
-    print(tasks_Done_NotInRecycleBin)        
-
+            tasks_Done_NotInRecycleBin+=1      
     
     return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
 
