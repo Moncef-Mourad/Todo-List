@@ -9,17 +9,17 @@
         <div class="Active">
             <div class="AddNewTask">
                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" >
-                    <path d="M17.5 7.29167V27.7083" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M7.29175 17.5H27.7084" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path class="PlusIcon"  d="M17.5 7.29167V27.7083" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path class="PlusIcon" d="M7.29175 17.5H27.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                  <input placeholder="Add New Task">
             </div>
             <div class="Today-Div">
-                    <p class="Day">Today</p>
-                    <div class="NumberBg">
-                      <p class="Number">3</p> 
-                    </div>
-              </div>
+    <p class="Day">Today</p>
+    <div class="NumberBg">
+      <p class="Number">{{counter_notDone}}</p> 
+    </div>
+</div>
                 
                 <div class="Upcoming-Tasks">
                     {% for task in today_tasks %}
@@ -55,7 +55,7 @@
             <div class="Completed">
                 <p class="Completed-Txt">Completed</p>
                 <div class="NumberBg2">
-                    <p class="Number2">3</p> 
+                    <p class="Number2">{{counter_notDone}}</p> 
                   </div>
             </div> 
             {% for task in today_tasks %}

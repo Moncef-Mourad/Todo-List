@@ -10,7 +10,9 @@
     "LeftBarBG Active RightBarBG"; 
 }
   
-  
+.PlusIcon{
+  stroke: black;
+}
 
 
   
@@ -206,12 +208,7 @@ svg{
 }
 /*##########################*/
 /*middle part css*/
-.Active{
-  position: absolute;
-  margin-top: 0px;
-  display: flex;
-  flex-direction: column;
-}
+
 .AddNewTask {
   display: flex;
   align-items: center;
@@ -354,6 +351,13 @@ svg{
   border-bottom: 1px solid #fafafa;
   background: #EBEBEB;
   align-items: center;
+}
+
+.taskFrow{
+    display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 
@@ -570,6 +574,7 @@ margin-top: 10%;
   flex-direction: column;
   margin-top: 30px;
   margin-bottom: 30px;
+  color: #000;
 }
 
 .Title{

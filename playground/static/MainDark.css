@@ -8,8 +8,11 @@
     grid-template-areas: 
       "LeftBarBG Active RightBarBG"; 
   }
-    
-    .Active { grid-area: Active; }
+  .PlusIcon{
+    stroke: white;
+  }
+
+  .Active { grid-area: Active; }
   a{
     text-decoration: none;
     color: #FFF;
@@ -56,9 +59,9 @@
       font-weight: 700;
       line-height: normal;
     }
-  /* .menu-icon{
-      Change its color when Light mode toggled
-    }   */
+  .menu-icon{
+      fill:#fff;
+    }  
   
     .Search-Bar{
       display: flex;

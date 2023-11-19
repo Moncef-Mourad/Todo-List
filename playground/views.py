@@ -68,11 +68,10 @@ def handle_task(request, task_id, source):
     # task_in_recycle = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     # Your logic for handling the task based on the source (e.g., delete or save changes)
 
+        # Logic for delete
     if '/todo_page/delete/' in request.path:
         if source == 'RecycleBin':
-            # task_in_recycle.delete()
             task.delete()
-        # Logic for delete
         elif source == 'Upcoming' or source == 'Today':
             task.is_in_recycle_bin = True
             task.save()
@@ -88,6 +87,14 @@ def handle_task(request, task_id, source):
             task.task_Progress = data.get('progress', task.task_Progress)
             task.task_List = data.get('list', task.task_List)
             task.save()
+    elif '/todo_page/restore/' in request.path:
+        if request.method == 'POST':
+            task.is_in_recycle_bin = False
+            task.save()    
+            task_deleted = get_object_or_404(DeletedTask, pk=task_id)
+            task_deleted.delete()
+
+
 
 
     # Redirect the user to the appropriate page based on the source
@@ -124,23 +131,36 @@ def checked_done_todo(request,src,task_id):
 
 #URLS for the Html's 
 def view_today_page(request):
-     
+    tasks_NotDone_NotInRecycleBin = 0
+    tasks_Done_NotInRecycleBin = 0
     current_date = datetime.now().date()
     formatted_today = current_date.strftime('%b %d, %Y')
     today_tasks = Todo.objects.filter(due_date=current_date)
+    for task in today_tasks:
+        if not task.isDone and not task.is_in_recycle_bin:
+            tasks_NotDone_NotInRecycleBin+=1
+        elif task.isDone and not task.is_in_recycle_bin:
+            tasks_Done_NotInRecycleBin+=1
 
     
-    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date})
+    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
 
 
 def view_upcoming_page(request):
-
+    tasks_NotDone_NotInRecycleBin=0
+    tasks_Done_NotInRecycleBin=0
     current_date = datetime.now().date()
     next_day = current_date + timedelta(days=1)
     formatted_next_day = next_day.strftime('%b %d, %y')
     upcoming_tasks = Todo.objects.filter(due_date=next_day)
+    for task in upcoming_tasks:
+        if not task.isDone and not task.is_in_recycle_bin:
+            tasks_NotDone_NotInRecycleBin+=1
+        elif task.isDone and not task.is_in_recycle_bin:
+            tasks_Done_NotInRecycleBin+=1
 
-    return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,})
+
+    return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
 
 
 

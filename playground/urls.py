@@ -7,6 +7,7 @@ urlpatterns = [
     path('index/todo_page/create/', views.create_task, name='create_task'),
     path('index/todo_page/delete/<int:task_id>/<str:source>/', views.handle_task, name='delete_todo'),
     path('index/todo_page/save/<int:task_id>/<str:source>/', views.handle_task, name='Save_Changes'),
+    path('index/todo_page/restore/<int:task_id>/<str:source>/', views.handle_task, name='Restore_Task'),
     path('index/todo_page/<str:src>/checked/<int:task_id>/', views.checked_done_todo, name='checked_done_todo'),
     path('index/todo_page/<str:src>/<int:task_id>/', views.get_task_data, name="get_task_data"),
 

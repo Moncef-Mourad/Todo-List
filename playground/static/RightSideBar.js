@@ -23,6 +23,8 @@ for (let btn of CheckBtns) {
   btn.addEventListener('click', function() {
     // Your event handling code goes here
     var taskId= btn.getAttribute("task_id"); 
+    console.log(taskId);
+
         fetch(`${src}/checked/0/`.replace("0", parseInt(taskId)));
           window.location.assign(window.location.href);
 
@@ -106,7 +108,26 @@ taskDivs.forEach(function (taskDiv) {
 
     if (src == 'RecycleBin'){
       DeleteBtn.style.backgroundColor="red";
-    }
+          document.getElementById("Save-Btn").addEventListener("click", function () {
+
+  
+        // Extract the CSRF token from the form
+        let csrfToken = document.querySelector(
+          "[name=csrfmiddlewaretoken]"
+        ).value;
+  
+        fetch(
+          `/index/todo_page/restore/0/${src}/`.replace("0",parseInt(taskId2)),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
+            }
+          }
+          )})
+        
+        }
     else if ( src == 'Upcoming' || src == 'Today' ){
 
       document.getElementById("Save-Btn").addEventListener("click", function () {
