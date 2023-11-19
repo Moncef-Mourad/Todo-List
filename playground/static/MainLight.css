@@ -10,12 +10,12 @@
     "LeftBarBG Active RightBarBG"; 
 }
   
-  
+ .Active { grid-area: Active; }
 
+.PlusIcon{
+  stroke: black;
+}
 
-  
-  
-  .Active { grid-area: Active; }
 a{
   text-decoration: none;
   color: #000;
@@ -149,8 +149,6 @@ svg{
     margin-bottom: 4%;
   }
  
-
-
   .Tasks-Icons, .Lists-Icons, .Options-Icons{
     margin-left: 3%;
     margin-right: 3%;
@@ -159,9 +157,10 @@ svg{
   }
 
 
-  .Selected{
+  #Selected{
     border-radius: 8px;
     border: 1px solid #000;
+    background: #1E293C;
   }
 
 /*#########################################################*/
@@ -536,7 +535,6 @@ margin-top: 10%;
 .Save-Btn{
   /* width: 50%; */
   height: 35px;
-  
   flex-shrink: 0;
   border-radius: 8px;
   border: 1px solid #0F172B;

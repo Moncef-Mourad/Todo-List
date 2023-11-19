@@ -1,4 +1,3 @@
-$("#dateSelect").datepicker();
 const taskDivs = document.querySelectorAll(".task_txt_div");
 const rightBarBG = document.querySelector(".RightBarBG");
 var deleteForm = document.getElementById("delete-form");
@@ -14,8 +13,6 @@ let src = '';
 if (window.location.pathname.includes("/index/todo_page/RecycleBin")){src = 'RecycleBin';}
 else if (window.location.pathname.includes("/index/todo_page/Upcoming")){src = 'Upcoming';}
 else if (window.location.pathname.includes("/index/todo_page/Today")){src = 'Today';}
-
-
 
 let upcoming_tasks = document.getElementsByClassName("Upcoming-Task")
 let CheckBtns = document.querySelectorAll('.isDone-Icon');
@@ -36,6 +33,8 @@ AddNewTask_Label.addEventListener('click',function(){
   if (!clicked) {
     clicked = true;
     document.querySelector(".RightBarBG").classList.toggle("show");
+    $("#dateSelect").datepicker();
+
   }
   if ( src == 'Upcoming' || src == 'Today' ){
 
@@ -98,6 +97,8 @@ taskDivs.forEach(function (taskDiv) {
     if (!clicked) {
       clicked = true;
       document.querySelector(".RightBarBG").classList.toggle("show");
+      $("#dateSelect").datepicker();
+
     }
     var taskId2= taskDiv.getAttribute("data-task-id"); 
     document.getElementById("RightBarContent").setAttribute("task-id", taskId2);
