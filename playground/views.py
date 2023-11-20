@@ -83,6 +83,7 @@ def handle_task(request, task_id, source):
             DeletedTask.objects.create(original_task=task)
             # generate_notification("Task Delete Successfully!")
     elif '/todo_page/save/' in request.path:
+        old_task_Descr = task.task_Descr
         # Logic for save changes
         if request.method == 'POST':
             data = json.loads(request.body)
@@ -92,6 +93,22 @@ def handle_task(request, task_id, source):
             task.task_Progress = data.get('progress', task.task_Progress)
             task.task_List = data.get('list', task.task_List)
             task.save()
+            
+            # Save modifications to the ModificationHistory model
+            modified_fields = {
+                'task_Text': {
+                    'old_value': old_task_Descr,
+                    'new_value': task.task_Descr
+                },
+}
+            task.save_modifications(modified_fields)
+            # Assuming 'todo_instance' is an instance of the Todo model
+            modification_history = ModificationHistory.objects.filter(original_task=task)
+            # Accessing modification dates for each record
+            for modification_record in modification_history:
+                print(modification_record.modification_date)
+
+
     elif '/todo_page/restore/' in request.path:
         if request.method == 'POST':
             task.is_in_recycle_bin = False
