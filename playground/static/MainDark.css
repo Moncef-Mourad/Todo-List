@@ -171,6 +171,8 @@ svg{
     .options-frame {
       display: none;
       position: fixed;
+      width: 60%;
+      height: 60%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -188,6 +190,13 @@ svg{
       right: 10px;
       cursor: pointer;
     }
+
+
+    .FrameContent{
+      display: flex;
+      align-items: center;
+    }
+
 
 
   #Selected{
@@ -684,6 +693,7 @@ p, h1, h2,label{
 /* Theme Switch Button */
 
 .theme-checkbox {
+  margin-left: 5%;
   --toggle-size: 16px;
   -webkit-appearance: none;
   -moz-appearance: none;

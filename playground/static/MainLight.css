@@ -171,9 +171,12 @@ svg{
     }
 
     /* Style for the options frame */
+
     .options-frame {
       display: none;
       position: fixed;
+      width: 60%;
+      height: 60%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -189,10 +192,14 @@ svg{
       position: absolute;
       top: 10px;
       right: 10px;
+      color: #000;
       cursor: pointer;
     }
 
-
+    .FrameContent{
+      display: flex;
+      align-items: center;
+    }
 
   #Selected{
     border-radius: 8px;
@@ -684,6 +691,7 @@ p, h1, h2,label{
 /* Theme Switch Button */
 
 .theme-checkbox {
+  margin-left: 5%;
   --toggle-size: 16px;
   -webkit-appearance: none;
   -moz-appearance: none;
