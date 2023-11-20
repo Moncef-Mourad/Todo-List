@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Options Frame Example</title>
+  <style>
+    /* Style for the blurred background */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 1;
+    }
+
+    /* Style for the options frame */
+    .options-frame {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+
+    /* Style for the X button */
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    /* Style for the left menu */
+    .left-menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .left-menu li {
+      margin-bottom: 10px;
+    }
+
+    /* Style for the theme switch */
+    .theme-switch {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Blurred Background -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- Options Frame -->
+  <div id="options-frame" class="options-frame">
+    <span class="close-button" onclick="closeOptionsFrame()">X</span>
+    <!-- Content for the options frame -->
+    <label for="theme-switch">Theme Switch:</label>
+    <input type="checkbox" id="theme-switch" class="theme-switch"> Dark Mode
+    <!-- Add other options as needed -->
+  </div>
+
+  <!-- Left Menu -->
+  <ul class="left-menu">
+    <!-- Add a unique ID to the li element you want to use as the trigger -->
+    <li id="options-trigger"><a href="#">Options</a></li>
+  </ul>
+
+  <script>
+    // Function to open the options frame
+    function openOptionsFrame() {
+      document.getElementById('options-frame').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    }
+
+    // Function to close the options frame
+    function closeOptionsFrame() {
+      document.getElementById('options-frame').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Event listener to open the options frame when the trigger is clicked
+    document.getElementById('options-trigger').addEventListener('click', openOptionsFrame);
+
+    // Event listener to close the options frame when clicking away from it
+    document.getElementById('overlay').addEventListener('click', closeOptionsFrame);
+  </script>
+
+</body>
+</html>

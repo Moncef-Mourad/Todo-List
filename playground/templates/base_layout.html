@@ -14,6 +14,16 @@
     <title>Todo-List Maker</title>
   </head>
   <body>
+      <!-- Blurred Background -->
+  <div id="overlay" class="overlay"></div>
+  <!-- Options Frame -->
+<div id="options-frame" class="options-frame">
+  <span class="close-button" onclick="closeOptionsFrame()">X</span>
+  <!-- Content for the options frame -->
+  <label for="theme-checkbox">Theme Switch:</label>
+  <input type="checkbox" class="theme-checkbox" onclick="toggleMode()">
+  <!-- Add other options as needed -->
+</div>
     <div class="container">
       <!-- ################################################LEFT-BAR################################################ -->
 
@@ -182,7 +192,7 @@
                           </svg>Recycle Bin
                     </a>
                   </li>
-              <li  class="li-elements" >
+              <li  class="li-elements" id="options-trigger" >
                 <a href="#" {% block Selected_Settings %}{% endblock %}>
                   <svg
                     class="Options-Icons"
@@ -199,7 +209,7 @@
                 </a>
               </li>
               <li  class="li-elements">
-                <a href="#">
+                <a>
                   <svg
                     class="Options-Icons"
                     xmlns="http://www.w3.org/2000/svg"
@@ -222,6 +232,7 @@
           </div>
         </div>
       </div>
+
       <!-- ################################################""ACTIVE################################################"" -->
 {% block Active %}
       <div class="Active"></div>
@@ -285,6 +296,7 @@
     </div>
 
     <script src="{% static 'LightDark-Mode.js' %}"></script>
+    <script src="{% static 'LeftSideBar.js' %}"></script>
     <script src="{% static 'RightSideBar.js' %}"></script>
     {% block script %}{% endblock %}
   </body>
