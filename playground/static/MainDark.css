@@ -151,6 +151,16 @@ svg{
     margin-bottom: 4%;
     color: #FFF;
   }
+  .AddNewList{
+    border: none;
+    cursor: pointer;
+    resize: none;
+    color:#fff ;
+    background-color: #1E293C;
+  }
+  input,textarea{
+    font-family: 'Inter', sans-serif;
+  }
  
   .Tasks-Icons, .Lists-Icons, .Options-Icons{
     margin-left: 3%;

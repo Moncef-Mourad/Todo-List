@@ -148,6 +148,20 @@ svg{
     align-items: center;
     margin-bottom: 4%;
   }
+
+  .AddNewList-Div{
+    display: flex;
+    align-items: center;
+    margin-bottom: 4%;
+    color: #000;
+  }
+  .AddNewList{
+    border: none;
+    cursor: pointer;
+    resize: none;
+    color:#000 ;
+    background-color: #F5F5F5;
+  }
  
   .Tasks-Icons, .Lists-Icons, .Options-Icons{
     margin-left: 3%;
@@ -598,6 +612,11 @@ margin-top: 10%;
     margin: 0;
     background: #FFFDFD;
     color: #FFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  input,textarea{
     font-family: 'Inter', sans-serif;
     font-weight: 600;
   }
