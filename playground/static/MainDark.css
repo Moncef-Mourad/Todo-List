@@ -145,6 +145,12 @@ svg{
     margin-bottom: 4%;
     color: #FFF;
   }
+  .AddNewList-Div{
+    display: flex;
+    align-items: center;
+    margin-bottom: 4%;
+    color: #FFF;
+  }
  
   .Tasks-Icons, .Lists-Icons, .Options-Icons{
     margin-left: 3%;

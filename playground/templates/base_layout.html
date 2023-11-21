@@ -152,7 +152,7 @@
         <div class="Line"></div>
         <div class="LeftBarContent2">
           <div class="Lists">
-            <ul class="Lists-List">
+            <ul class="Lists-List" id="Lists-List">
               <p>Lists</p>
               <li class="li-elements" id="List-Info" >
                 <a href="#"><svg class="Lists-Icons" style="background: #dc5d5d"></svg>Personal</a>
@@ -163,21 +163,13 @@
               <li class="li-elements" id="List-Info" >
                 <a href="#"><svg class="Lists-Icons" style="background: #fff500"></svg>List 1</a>
               </li>
-              <li class="li-elements" >
-                <a href="#"
-                  ><svg
-                    class="Lists-Icons"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
+              <li class="li-elements" id="List-Add">
+                <div class="AddNewList-Div">
+                  <svg class="Lists-Icons" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path
-                      d="M20.002 9.13043H10.8715V0L9.13239 0V9.13043H0.00195313L0.00195313 10.8696H9.13239V20H10.8715V10.8696H20.002V9.13043Z"
-                      
-                    /></svg>Add New List</a
-                >
+                    d="M20.002 9.13043H10.8715V0L9.13239 0V9.13043H0.00195313L0.00195313 10.8696H9.13239V20H10.8715V10.8696H20.002V9.13043Z"/>
+                  </svg>
+                  <input type="text" id="AddNewList" class="AddNewList" onkeydown="HandleKeyPress(event)" placeholder="Add New List" maxlength="10" rows="1" cols="9" style="border: none;cursor: pointer;resize: none;color:#fff ;background-color: #1E293C;"></input>
               </li>
             </ul>
           </div>
