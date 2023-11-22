@@ -16,29 +16,33 @@ function openOptionsFrame() {
   // Event listener to close the options frame when clicking away from it
   document.getElementById('overlay').addEventListener('click', closeOptionsFrame);
 
-  function AddNewList(inputText){
+function AddNewList(inputText) {
+  // Create elements
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  var svg = document.createElement("svg");
+  
+  // Set attributes for SVG element
+  svg.setAttribute('class', 'Lists-Icons');
+  svg.setAttribute('style', 'background: #fff500;');
+  
+  // Append elements to create the new list item
+  a.appendChild(svg);
+  a.appendChild(document.createTextNode(inputText));
+  li.appendChild(a);
+  li.setAttribute('class', 'li-elements');
+  li.setAttribute('id', 'List-Info');
 
-    
+  // Get the parent ul element
+  var listsUl = document.getElementById("Lists-List");
 
-   var listsUl = document.getElementById("Lists-List");
-   var li = document.createElement("li");
-   var a = document.createElement("a");
-   var svg = document.createElement("svg");
-   svg.setAttribute('class','Lists-Icons');
-   svg.setAttribute('style','background: #fff500;');
-   a.appendChild(svg);
-   a.appendChild(document.createTextNode(inputText));
-    li.appendChild(a)
-    li.setAttribute('class','li-elements');
-    li.setAttribute('id','List-Info')
-    listsUl.appendChild(li);
+  // Get the reference element (AddNewList text field)
+  var referenceElement = document.getElementById("List-Add");
 
-    var liListAdd = document.getElementById('List-Add');
-    console.log(liListAdd);
-    listsUl.lastChild = liListAdd;
-    console.log(listsUl.lastChild);
+  // Insert the new list item before the reference element
+  listsUl.insertBefore(li, referenceElement);
+}
 
-  }
 
 
 function HandleKeyPress(event){
@@ -46,7 +50,9 @@ function HandleKeyPress(event){
     if (event.keyCode === 13) {
       // Do something when Enter key is pressed
       alert('Enter key pressed!');
-      AddNewList(document.getElementById('AddNewList').value)
-      // You can replace the alert with your desired functionality
+      var AddNewListValue = document.getElementById('AddNewList').value
+      var Color = document.getElementById('AddNewList').value
+      AddNewList(AddNewListValue)
+      fetch(`index/todo_page/AddNewList/${AddNewListValue}/${Color}`)
     }
 }  

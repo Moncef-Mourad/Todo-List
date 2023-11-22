@@ -10,6 +10,7 @@ urlpatterns = [
     path('index/todo_page/restore/<int:task_id>/<str:source>/', views.handle_task, name='Restore_Task'),
     path('index/todo_page/<str:src>/checked/<int:task_id>/', views.checked_done_todo, name='checked_done_todo'),
     path('index/todo_page/<str:src>/<int:task_id>/', views.get_task_data, name="get_task_data"),
+    path('index/todo_page/AddNewList/<str:ListName>/<str:HashColor>/',views.AddNewList,name='AddNewList'),
 
 
 
