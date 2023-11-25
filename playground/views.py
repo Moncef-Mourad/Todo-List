@@ -166,6 +166,14 @@ def AddNewList(request,NewListName,HashColor):
 
 #URLS for the Html's 
 def view_today_page(request):
+
+    #Load The Lists Available
+    Curr_Lists = List.objects.all()
+    list_dict  = {}
+    for list_obj in Curr_Lists:
+        list_dict[list_obj.ListName] = list_obj.svgColor  
+    print(list_dict)     
+
     tasks_NotDone_NotInRecycleBin = 0
     tasks_Done_NotInRecycleBin = 0
     current_date = datetime.now().date()
@@ -177,7 +185,7 @@ def view_today_page(request):
         elif task.isDone and not task.is_in_recycle_bin:
             tasks_Done_NotInRecycleBin+=1      
     
-    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
+    return render(request, 'Today.html',{'list_dict':list_dict,'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
 
 
 def view_upcoming_page(request):

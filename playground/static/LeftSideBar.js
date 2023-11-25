@@ -24,7 +24,6 @@ function AddNewList(inputText) {
   
   // Set attributes for SVG element
   svg.setAttribute('class', 'Lists-Icons');
-  svg.setAttribute('style', 'background: #fff500;');
   
   // Append elements to create the new list item
   a.appendChild(svg);
@@ -49,7 +48,7 @@ function HandleKeyPress(event){
     if (event.keyCode === 13) {
       var AddNewListValue = document.getElementById('AddNewList').value
       var Color = document.getElementById('colorPicker').value;
-      AddNewList(AddNewListValue);
+      // AddNewList(AddNewListValue);
       var encodedColor = encodeURIComponent(Color);
       fetch(`/index/todo_page/AddNewList/${AddNewListValue}/${encodedColor}/`).then((response) => response.json())
       .then((data) => {
@@ -58,7 +57,7 @@ function HandleKeyPress(event){
       .catch((error) => {
         console.error("Error:", error);
       });
-
-      window.location.assign(window.location.pathname);
+      console.log("Refreshing...");
+      location.reload();
     }
 }  

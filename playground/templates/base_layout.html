@@ -161,8 +161,15 @@
                 <a href="#"><svg class="Lists-Icons" style="background: #00c2ff"></svg>Work</a>
               </li>
               <li class="li-elements" id="List-Info" >
-                <a href="#"><svg class="Lists-Icons" style="background: #fff500"></svg>List 1</a>
+                <a href="#"><svg class="Lists-Icons" style="background: #fff500"></svg>Studies</a>
               </li>
+              {% for ListName, svgColor in list_dict.items %}
+              {% if ListName != 'Personal' and ListName != 'Work' and ListName != 'Studies' %}
+              <li class="li-elements" id="List-Info" >
+                <a href="#"><svg class="Lists-Icons" style="background: {{svgColor}};"></svg>{{ListName}}</a>
+              </li>
+              {% endif %}
+              {% endfor %}
               <li class="li-elements" id="List-Add">
                 <div class="AddNewList-Div">
                   <svg class="Lists-Icons" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
