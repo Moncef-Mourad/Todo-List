@@ -11,6 +11,17 @@ import json
 #request -> response 
 #request handler
 
+
+def load_Lists():
+    #Load The Available Lists
+    Curr_Lists = List.objects.all()
+    list_dict  = {}
+    for list_obj in Curr_Lists:
+        list_dict[list_obj.ListName] = list_obj.svgColor  
+    return list_dict    
+
+
+
 def index(request,YY,MM,DD):
     date = YY+'-'+MM+'-'+DD
     # # Connect to the database
@@ -166,13 +177,7 @@ def AddNewList(request,NewListName,HashColor):
 
 #URLS for the Html's 
 def view_today_page(request):
-
-    #Load The Lists Available
-    Curr_Lists = List.objects.all()
-    list_dict  = {}
-    for list_obj in Curr_Lists:
-        list_dict[list_obj.ListName] = list_obj.svgColor  
-    print(list_dict)     
+    list_dict = load_Lists()
 
     tasks_NotDone_NotInRecycleBin = 0
     tasks_Done_NotInRecycleBin = 0
@@ -189,6 +194,8 @@ def view_today_page(request):
 
 
 def view_upcoming_page(request):
+    list_dict = load_Lists()
+
     tasks_NotDone_NotInRecycleBin=0
     tasks_Done_NotInRecycleBin=0
     current_date = datetime.now().date()
@@ -202,7 +209,7 @@ def view_upcoming_page(request):
             tasks_Done_NotInRecycleBin+=1
 
 
-    return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
+    return render(request, 'Upcoming.html', {'list_dict':list_dict,'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
 
 
 
@@ -224,14 +231,20 @@ def get_task_data(request, src,task_id):
 
 
 def view_calendar_page(request):
-    return render(request, 'Calendar.html')
+    list_dict = load_Lists()
+
+    return render(request, 'Calendar.html',{'list_dict':list_dict,})
 
 def view_stickywall_page(request):
-    return render(request, 'StickyWall.html')
+    list_dict = load_Lists()
+
+    return render(request, 'StickyWall.html',{'list_dict':list_dict,})
 
 def view_RecycleBin(request):
+    list_dict = load_Lists()
+
     Recycled_Tasks = DeletedTask.objects.all()
-    return render(request, 'RecycleBin.html',{'Recycled_Tasks':Recycled_Tasks})
+    return render(request, 'RecycleBin.html',{'list_dict':list_dict,'Recycled_Tasks':Recycled_Tasks})
 
 
 
