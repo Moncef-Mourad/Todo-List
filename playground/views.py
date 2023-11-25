@@ -152,8 +152,14 @@ def checked_done_todo(request,src,task_id):
     elif src == 'RecycleBin':
         return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('RecycleBin_page')})
 
+
+
+
 def AddNewList(request,NewListName,HashColor):
-    List = List.objects.create(ListName=NewListName, svgColor=HashColor)
+
+    List.objects.create(ListName=NewListName, svgColor=HashColor)
+    return JsonResponse({'message': 'List Created successfully!'})
+
 
 
 

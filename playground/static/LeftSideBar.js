@@ -43,16 +43,22 @@ function AddNewList(inputText) {
   listsUl.insertBefore(li, referenceElement);
 }
 
-
-
 function HandleKeyPress(event){
+  
    // Check if the pressed key is Enter (key code 13)
     if (event.keyCode === 13) {
-      // Do something when Enter key is pressed
-      alert('Enter key pressed!');
       var AddNewListValue = document.getElementById('AddNewList').value
-      var Color = document.getElementById('AddNewList').value
-      AddNewList(AddNewListValue)
-      fetch(`index/todo_page/AddNewList/${AddNewListValue}/${Color}`)
+      var Color = document.getElementById('colorPicker').value;
+      AddNewList(AddNewListValue);
+      var encodedColor = encodeURIComponent(Color);
+      fetch(`/index/todo_page/AddNewList/${AddNewListValue}/${encodedColor}/`).then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+      window.location.assign(window.location.pathname);
     }
 }  

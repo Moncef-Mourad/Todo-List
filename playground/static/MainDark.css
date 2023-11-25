@@ -156,8 +156,37 @@ svg{
     cursor: pointer;
     resize: none;
     color:#fff ;
+    width: 50%;
     background-color: #1E293C;
   }
+
+/* AddNewList ColorPalette */
+
+input[type="color"] {
+  appearance: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 10%;
+  margin-right: 5%;
+  outline: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* End ColorPalette */
+
+
+
   input,textarea{
     font-family: 'Inter', sans-serif;
   }
