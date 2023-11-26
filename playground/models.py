@@ -36,7 +36,7 @@ class Todo(models.Model):
         super(Todo, self).save(*args, **kwargs)   
 
     def __str__(self):
-        return str(self.id) + '    ||    ' + self.task_Text + '    ||    ' + 'Descr...' + '    ||    ' + self.task_List + '    ||    ' + self.task_Progress + '    ||    Date Created:' + str(self.date_created) + '    ||    Due Date:' + str(self.due_date)
+        return str(self.id) + '    ||    ' + self.task_Text + '    ||    ' + 'Descr...' + '    ||    ' + self.task_List.ListName + '    ||    ' + self.task_Progress + '    ||    Date Created:' + str(self.date_created) + '    ||    Due Date:' + str(self.due_date)
 
 
 

@@ -155,18 +155,24 @@
             <ul class="Lists-List" id="Lists-List">
               <p>Lists</p>
               <li class="li-elements" id="List-Info" >
-                <a href="#"><svg class="Lists-Icons" style="background: #dc5d5d"></svg>Personal</a>
+                
+                <a href="{% url 'viewList_page' 'Personal' %}"><svg class="Lists-Icons" style="background: #dc5d5d"></svg>Personal</a>
+
               </li>
               <li class="li-elements" id="List-Info" >
-                <a href="#"><svg class="Lists-Icons" style="background: #00c2ff"></svg>Work</a>
+                <a href="{% url 'viewList_page' 'Work' %}"><svg class="Lists-Icons" style="background: #00c2ff"></svg>Work</a>
               </li>
               <li class="li-elements" id="List-Info" >
-                <a href="#"><svg class="Lists-Icons" style="background: #fff500"></svg>Studies</a>
+                <a href="{% url 'viewList_page' 'Studies' %}"><svg class="Lists-Icons" style="background: #fff500"></svg>Studies</a>
               </li>
               {% for ListName, svgColor in list_dict.items %}
               {% if ListName != 'Personal' and ListName != 'Work' and ListName != 'Studies' %}
               <li class="li-elements" id="List-Info" >
-                <a href="#"><svg class="Lists-Icons" style="background: {{svgColor}};"></svg>{{ListName}}</a>
+                <a href="{% url 'viewList_page' ListName %}"><svg class="Lists-Icons" style="background: {{svgColor}};"></svg>{{ListName}}</a>
+                  <form method="post" action="{% url 'delete_List' ListName %}">
+                    {% csrf_token %}
+                    <button class="delete-button" type="submit">Delete</button>
+                  </form>
               </li>
               {% endif %}
               {% endfor %}
@@ -261,9 +267,9 @@
             <div class="Select-List">
               <label class="User-Options">List:</label>
               <select class="select-L" id="select-L">
-                <option>Personal</option>
-                <option>Work</option>
-                <option>List 1</option>
+                {% for ListName in list_dict %}
+                <option>{{ListName}}</option>
+                {% endfor %}
               </select>
             </div>
             <div class="Select-DueDate" for="Select-DueDate">

@@ -11,6 +11,7 @@ urlpatterns = [
     path('index/todo_page/<str:src>/checked/<int:task_id>/', views.checked_done_todo, name='checked_done_todo'),
     path('index/todo_page/<str:src>/<int:task_id>/', views.get_task_data, name="get_task_data"),
     path('index/todo_page/AddNewList/<str:NewListName>/<str:HashColor>/',views.AddNewList,name='AddNewList'),
+    path('index/todo_page/delete/<str:listName>/', views.delete_List, name='delete_List'),
 
 
 
@@ -19,6 +20,8 @@ urlpatterns = [
     path('index/todo_page/Calendar', views.view_calendar_page, name="calendar_page"),
     path('index/todo_page/StickyWall', views.view_stickywall_page, name="stickywall_page"),
     path('index/todo_page/RecycleBin', views.view_RecycleBin, name="RecycleBin_page"),
+    path('index/todo_page/<str:ListName>', views.view_List, name="viewList_page"),
+
 
 
 ]

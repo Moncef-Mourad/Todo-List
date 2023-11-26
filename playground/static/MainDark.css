@@ -145,9 +145,18 @@ svg{
     margin-bottom: 4%;
     color: #FFF;
   }
-  .AddNewList-Div{
+
+  /* #List-Name{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+  } */
+
+
+  .AddNewList-Div{
+    display: flex;  
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 4%;
     color: #FFF;
   }
@@ -156,7 +165,7 @@ svg{
     cursor: pointer;
     resize: none;
     color:#fff ;
-    width: 50%;
+    /* width: 50%; */
     background-color: #1E293C;
   }
 
@@ -169,7 +178,6 @@ input[type="color"] {
   height: 30px;
   cursor: pointer;
   border-radius: 50%;
-  margin-left: 10%;
   margin-right: 5%;
   outline: none;
 }
