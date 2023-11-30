@@ -1,12 +1,19 @@
 {% extends 'base_layout.html' %}
 {% load static %}
-{% block Selected_RecycleBin %}id="Selected"{% endblock %}
+{% block Selected_Work %}id="Selected"{% endblock %}
 
       <!-- ################################################""ACTIVE################################################"" -->
 
 {% block Active %}      
 
-      <div class="Active">
+<div class="Active">
+  <div class="AddNewTask">
+          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" >
+          <path class="PlusIcon" d="M17.5 7.29167V27.7083" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="PlusIcon" d="M7.29175 17.5H27.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input placeholder="Add New Task">
+  </div>  
         <h1 class="Title">{{List.ListName}} Tasks</h1>
         <div class="Upcoming-Tasks">
           {% for task in listTasks %}
@@ -42,7 +49,7 @@
           </div>
           {% endfor %}
         </div>
-      </div>
+</div>
 
 {% endblock %}   
 

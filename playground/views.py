@@ -223,9 +223,9 @@ def view_upcoming_page(request):
 
 
 def get_task_data(request, src,task_id):
-    if '/todo_page/Upcoming' in request.path or '/todo_page/Today' in request.path:
+    if not '/todo_page/RecycleBin' in request.path:
         task = get_object_or_404(Todo, id=task_id)
-    elif '/todo_page/RecycleBin' in request.path:
+    else:
         task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     data = {
         'title': task.task_Text,

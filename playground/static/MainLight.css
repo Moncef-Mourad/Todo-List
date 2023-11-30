@@ -149,6 +149,23 @@ svg{
     margin-bottom: 4%;
   }
 
+  .delete-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFFDFD;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: normal;
+  }
+  
+  .delete-button:hover {
+  color:red;
+    /* background-color: # ; */
+  }
+
   #List-Info{
     display: flex;
     align-items: center;

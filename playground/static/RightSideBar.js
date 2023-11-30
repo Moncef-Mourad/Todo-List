@@ -10,9 +10,11 @@ let taskProgress = document.getElementById("select-P");
 var DeleteBtn = document.getElementById("Delete-Btn");
 var clicked = false;
 let src = '';
-if (window.location.pathname.includes("/index/todo_page/RecycleBin")){src = 'RecycleBin';}
-else if (window.location.pathname.includes("/index/todo_page/Upcoming")){src = 'Upcoming';}
-else if (window.location.pathname.includes("/index/todo_page/Today")){src = 'Today';}
+
+var path = window.location.pathname;
+var pathArray = path.split("/");
+var lastPart = pathArray[pathArray.length - 1];
+src = lastPart;
 
 let upcoming_tasks = document.getElementsByClassName("Upcoming-Task")
 let CheckBtns = document.querySelectorAll('.isDone-Icon');
