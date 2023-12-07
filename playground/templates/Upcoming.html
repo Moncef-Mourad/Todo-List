@@ -94,6 +94,7 @@
   {% endif %}
   {% endfor %}
 
+  {% if counter_Done > 0 %}
   <div class="Completed">
     <p class="Completed-Txt">Completed</p>
     <div class="NumberBg2">
@@ -168,6 +169,8 @@
     </div>
   </div>
   {% endif %} {% endfor %}
+</div>
+{% endif %}
 </div>
 
 {% endblock %} {% block script %}

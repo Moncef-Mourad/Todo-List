@@ -9,6 +9,8 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+
 
 def login_user(request):
     if request.method =="POST":
@@ -42,12 +44,15 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             login(request,user)
             messages.success(request, ("Registration Succesful !"))
+            List.objects.create(user=user,ListName='Personal',svgColor='#dc5d5d')
+            List.objects.create(user=user,ListName='Work',svgColor='#00c2ff')
+            List.objects.create(user=user,ListName='Studies',svgColor='#fff500')
             return redirect('today_page')
     else:
-        form = UserCreationForm()
-        
-    return render(request,'authenticate/register_user.html',{'form':form,})
-                       
+        form = UserCreationForm()    
+    return render(request,'authenticate/register_user.html',{
+                  'form':form,
+                })
         
      
 
@@ -58,9 +63,9 @@ def register_user(request):
 #request handler
 
 
-def load_Lists():
+def load_Lists(user):
     #Load The Available Lists
-    Curr_Lists = List.objects.all()
+    Curr_Lists = List.objects.filter(user=user)
     list_dict  = {}
     for list_obj in Curr_Lists:
         list_dict[list_obj.ListName] = list_obj.svgColor  
@@ -90,6 +95,7 @@ def index(request,YY,MM,DD):
 
 def create_todo_page(request):
     if request.method == 'POST':
+        user = request.user
         task_txt = request.POST.get('task_Txt')
         date_created = request.POST.get('date')
 
@@ -104,13 +110,14 @@ def create_todo_page(request):
             return redirect(reverse('todo_page_create'))
         else:
             return redirect(reverse('todo_page_create'))
-    all_tasks = Todo.objects.all() 
+    all_tasks = Todo.objects.filter(user=user,) 
     return render(request, 'create_Todo-List.html',{'all_tasks': all_tasks})    
 
 def create_task(request):
     if '/todo_page/create/' in request.path:
         curr_date = datetime.now().date()
         if request.method == 'POST':
+            user = request.user
             data = json.loads(request.body)
             txt = data.get('title')
             Descr = data.get('description')
@@ -118,23 +125,23 @@ def create_task(request):
             Progress = data.get('progress')
             listname = data.get('list')
             curr_URL = data.get('curr_url')
-            print(txt)
-            print(curr_URL)
-            new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress, date_created=curr_date)
-            new_Task.task_List = List.objects.get(ListName=listname)
+
+            new_Task = Todo(user=user,task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress, date_created=curr_date)
+            new_Task.task_List = List.objects.get(user=user,ListName=listname)
             new_Task.save()
     return JsonResponse({'message': 'Data received successfully!', 'redirect_url': curr_URL})
     
 
 def delete_List(request, listName):
     if request.method == 'POST':
-        list_wanted = get_object_or_404(List,ListName = listName)
+        user = request.user
+        list_wanted = get_object_or_404(List,user=user,ListName = listName)
         list_wanted.delete()
     return redirect('today_page')
 
 
 def handle_task(request, task_id, source):
-    task = get_object_or_404(Todo, id=task_id)
+    task = get_object_or_404(Todo, user=request.user, id=task_id)
     # task_in_recycle = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     # Your logic for handling the task based on the source (e.g., delete or save changes)
 
@@ -142,10 +149,10 @@ def handle_task(request, task_id, source):
     if '/todo_page/delete/' in request.path:
         if source == 'RecycleBin':
             task.delete()
-        elif source == 'Upcoming' or source == 'Today':
+        else:
             task.is_in_recycle_bin = True
             task.save()
-            DeletedTask.objects.create(original_task=task)
+            DeletedTask.objects.create(user=request.user,original_task=task)
             # generate_notification("Task Delete Successfully!")
     elif '/todo_page/save/' in request.path:
         old_task_Text = task.task_Text
@@ -156,6 +163,7 @@ def handle_task(request, task_id, source):
 
         # Logic for save changes
         if request.method == 'POST':
+            user = request.user
             data = json.loads(request.body)
             task.task_Text = data.get('title', task.task_Text)
             task.task_Descr = data.get('description', task.task_Descr)
@@ -175,7 +183,7 @@ def handle_task(request, task_id, source):
                     'new_value': task.task_Descr
                 },'due_date': {
                     'old_value': str(old_due_date),
-                    'new_value': task.due_date
+                    'new_value': str(task.due_date)
                 },'task_Progress': {
                     'old_value': old_task_Progress,
                     'new_value': task.task_Progress
@@ -186,9 +194,9 @@ def handle_task(request, task_id, source):
 }
             print(modified_fields)
             task.save() 
-            task.save_modifications(modified_fields)
+            task.save_modifications(modified_fields, user)
             # Assuming 'todo_instance' is an instance of the Todo model
-            modification_history = ModificationHistory.objects.filter(original_task=task)
+            modification_history = ModificationHistory.objects.filter(user=user,original_task=task)
             # Accessing modification dates for each record
             for modification_record in modification_history:
                 print(modification_record.modification_date)
@@ -196,9 +204,10 @@ def handle_task(request, task_id, source):
 
     elif '/todo_page/restore/' in request.path:
         if request.method == 'POST':
+            user = request.user
             task.is_in_recycle_bin = False
             task.save()    
-            task_deleted = get_object_or_404(DeletedTask, pk=task_id)
+            task_deleted = get_object_or_404(DeletedTask,user=user, pk=task_id)
             task_deleted.delete()
 
 
@@ -222,9 +231,9 @@ def handle_task(request, task_id, source):
 def checked_done_todo(request,src,task_id):
         # Use get_object_or_404 to get the specific Todo item
     if src  == 'RecycleBin':
-        task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
+        task = get_object_or_404(DeletedTask,user=request.user, original_task_id=task_id).original_task
     elif src == 'Upcoming' or src=='Today':
-        task = get_object_or_404(Todo, id=task_id)
+        task = get_object_or_404(Todo,user=request.user, id=task_id)
 
     # mark the checking box
     task.isDone = not task.isDone
@@ -239,10 +248,10 @@ def checked_done_todo(request,src,task_id):
 
 
 
-
+@login_required
 def AddNewList(request,NewListName,HashColor):
-
-    List.objects.create(ListName=NewListName, svgColor=HashColor)
+    user = request.user
+    List.objects.create(user=user,ListName=NewListName, svgColor=HashColor)
     return JsonResponse({'message': 'List Created successfully!'})
 
 
@@ -250,14 +259,16 @@ def AddNewList(request,NewListName,HashColor):
 
 
 #URLS for the Html's 
+@login_required
 def view_today_page(request):
-    list_dict = load_Lists()
-    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+    user = request.user
+    list_dict = load_Lists(user)
+    modifications = ModificationHistory.objects.filter(user=user,).order_by('-modification_date')
 
     tasks_NotDone_NotInRecycleBin = 0
     tasks_Done_NotInRecycleBin = 0
     current_date = datetime.now().date()
-    today_tasks = Todo.objects.filter(due_date=current_date)
+    today_tasks = Todo.objects.filter(user=user,due_date=current_date)
     for task in today_tasks:
         if not task.isDone and not task.is_in_recycle_bin:
             tasks_NotDone_NotInRecycleBin+=1
@@ -266,17 +277,18 @@ def view_today_page(request):
     
     return render(request, 'Today.html',{'list_dict':list_dict,'modifications':modifications,'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
 
-
+@login_required
 def view_upcoming_page(request):
-    list_dict = load_Lists()
-    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+    user = request.user
+    list_dict = load_Lists(user)
+    modifications = ModificationHistory.objects.filter(user=user,).order_by('-modification_date')
 
     tasks_NotDone_NotInRecycleBin=0
     tasks_Done_NotInRecycleBin=0
     current_date = datetime.now().date()
     next_day = current_date + timedelta(days=1)
     formatted_next_day = next_day.strftime('%b %d, %y')
-    upcoming_tasks = Todo.objects.filter(due_date=next_day)
+    upcoming_tasks = Todo.objects.filter(user=user,due_date=next_day)
     for task in upcoming_tasks:
         if not task.isDone and not task.is_in_recycle_bin:
             tasks_NotDone_NotInRecycleBin+=1
@@ -288,12 +300,12 @@ def view_upcoming_page(request):
 
 
 
-
+@login_required
 def get_task_data(request, src,task_id):
     if not '/todo_page/RecycleBin' in request.path:
-        task = get_object_or_404(Todo, id=task_id)
+        task = get_object_or_404(Todo,user=request.user, id=task_id)
     else:
-        task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
+        task = get_object_or_404(DeletedTask,user=request.user, original_task_id=task_id).original_task
     data = {
         'title': task.task_Text,
         'description': task.task_Descr,
@@ -304,31 +316,38 @@ def get_task_data(request, src,task_id):
     return JsonResponse(data)
 
 
-
+@login_required
 def view_calendar_page(request):
-    list_dict = load_Lists()
-    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+    user = request.user
+    list_dict = load_Lists(user)
+    modifications = ModificationHistory.objects.filter(user=user,).order_by('-modification_date')
 
     return render(request, 'Calendar.html',{'list_dict':list_dict,'modifications':modifications,})
-
+@login_required
 def view_stickywall_page(request):
-    list_dict = load_Lists()
-    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+    user = request.user
+    list_dict = load_Lists(user)
+    modifications = ModificationHistory.objects.filter(user=user,).order_by('-modification_date')
 
     return render(request, 'StickyWall.html',{'list_dict':list_dict,'modifications':modifications,})
 
+@login_required
 def view_RecycleBin(request):
-    list_dict = load_Lists()
-    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+    user = request.user
+    list_dict = load_Lists(user)
+    modifications = ModificationHistory.objects.filter(user=user,).order_by('-modification_date')
 
-    Recycled_Tasks = DeletedTask.objects.all()
+    Recycled_Tasks = DeletedTask.objects.filter(user=user,)
     return render(request, 'RecycleBin.html',{'list_dict':list_dict,'modifications':modifications,'Recycled_Tasks':Recycled_Tasks})
 
+@login_required
 def view_List(request, ListName):
-    list_dict = load_Lists()
-    modifications = ModificationHistory.objects.all().order_by('-modification_date')
-    listObj = get_object_or_404(List,ListName=ListName)
-    listTasks = Todo.objects.filter(task_List=listObj.ListName)
+    user = request.user
+    list_dict = load_Lists(user)
+    modifications = ModificationHistory.objects.filter(user=user).order_by('-modification_date')
+    listObj = get_object_or_404(List, user=user, ListName=ListName)
+
+    listTasks = Todo.objects.filter(user=user,task_List=listObj)
 
     return render(request, 'List.html', {'list_dict':list_dict,'modifications':modifications, 'List':listObj, 'listTasks':listTasks})
 

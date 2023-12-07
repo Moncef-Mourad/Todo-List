@@ -17,6 +17,7 @@
         <h1 class="Title">{{List.ListName}} Tasks</h1>
         <div class="Upcoming-Tasks">
           {% for task in listTasks %}
+          {% if not task.is_in_recycle_bin %}
           <div class="Upcoming-Task" id="Upcoming-Task" task_id="{{task.pk}}">
             <div class="taskFrow">
               {% if task.isDone %}
@@ -47,6 +48,7 @@
                   <p class="infoSup-txts">{{ List.ListName }}</p>
               </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
 </div>

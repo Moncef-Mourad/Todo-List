@@ -6,7 +6,7 @@
       <!-- ################################################""ACTIVE################################################"" -->
 
 {% block Active %}      
-        <div class="Active">
+<div class="Active">
             <div class="AddNewTask">
                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" >
                     <path class="PlusIcon" d="M17.5 7.29167V27.7083" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -51,7 +51,7 @@
                     {% endfor %}
                     
                 </div>
-
+            {% if counter_Done > 0 %}
             <div class="Completed">
                 <p class="Completed-Txt">Completed</p>
                 <div class="NumberBg2">
@@ -85,11 +85,11 @@
                 </div>
               </div>  
               
-            </div>
             {% endif %}
             {% endfor %}
         </div>
-      
+        {% endif %}
+      </div>        
 
 
         
