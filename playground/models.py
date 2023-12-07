@@ -31,7 +31,9 @@ class Todo(models.Model):
         if self.isDone:
             self.task_Progress = 'Done'
         else:
-            self.task_Progress='Incomplete'    
+            self.task_Progress='Incomplete'  
+
+        self.task_List = List.objects.get(ListName=self.task_List.ListName)      
         # Call the original save method to save the object
         super(Todo, self).save(*args, **kwargs)   
 

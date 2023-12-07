@@ -49,7 +49,7 @@ svg{
   }
 
   .LeftBarBG::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
   
   .LeftBarBG::-webkit-scrollbar-thumb {
@@ -58,7 +58,7 @@ svg{
   }
   
   .LeftBarBG::-webkit-scrollbar-track {
-    background-color: #0F172B;
+    background-color: #fff;
     border-radius: 6px;
   }
   
@@ -241,6 +241,7 @@ input[type="color"]::-webkit-color-swatch {
     .options-frame {
       display: none;
       position: fixed;
+      overflow-y: auto;
       width: 60%;
       height: 60%;
       top: 50%;
@@ -264,6 +265,13 @@ input[type="color"]::-webkit-color-swatch {
 
     .FrameContent{
       display: flex;
+      flex-direction: column;
+      
+    }
+
+    .Smt{
+      display: flex;
+      margin-bottom: 10%;
       align-items: center;
     }
 
@@ -622,7 +630,7 @@ margin-top: 10%;
   justify-content: space-between;
   align-items: end;
   align-content: center;
-  margin-top: 85%;
+  margin-top: 60%;
 }
 
 .Delete-Btn{
@@ -746,7 +754,7 @@ margin-top: 10%;
   margin:0;
   font-size: 14px;
 }
-p, h1, h2,label{
+p, h1, h2,label, td, th{
   color: #000;
  }
 

@@ -21,9 +21,40 @@
   <span class="close-button" onclick="closeOptionsFrame()">X</span>
   <!-- Content for the options frame -->
   <div class="FrameContent">
-    <label for="theme-checkbox">Theme Switch:</label>
-    <input type="checkbox" class="theme-checkbox" onclick="toggleMode()">
-    <!-- Add other options as needed -->
+    <div class="Smt">
+      <label for="theme-checkbox">Theme Switch:</label>
+      <input type="checkbox" class="theme-checkbox" onclick="toggleMode()">
+    </div>
+    <button style="cursor: pointer;" onclick="viewChangesHistory()" >View Changes History</button>
+<div id="changesHistoryTable" style="display: none;">
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Task Title</th>
+          <th>Task Description</th>
+          <th>Task List</th>
+          <th>Task DueDate</th>
+          <th>Task Progress</th>
+          <th>Modification Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for modification in modifications %}
+          <tr>
+            <td>{{ modification.original_task.task_Text }}</td>
+            <td>OLD_VALUE: {{ modification.modified_fields.task_Text.old_value }}<br>NEW_VALUE: {{ modification.modified_fields.task_Text.new_value }}</td>
+            <td>old_Value: {{ modification.modified_fields.task_Descr.old_value }}<br>new_Value: {{ modification.modified_fields.task_Descr.new_value }}</td>
+            <td>old_Value: {{ modification.modified_fields.task_List.old_value }}<br>new_Value: {{ modification.modified_fields.task_List.new_value }}</td>
+            <td>old_Value: {{ modification.modified_fields.due_date.old_value }}<br>new_Value: {{ modification.modified_fields.due_date.new_value }}</td>
+            <td>old_Value: {{ modification.modified_fields.task_Progress.old_value }}<br>new_Value: {{ modification.modified_fields.task_Progress.new_value }}</td>
+            <td>{{ modification.modification_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
   </div>
 </div>
     <div class="container">
@@ -266,11 +297,13 @@
           <div class="Select-Options">
             <div class="Select-List">
               <label class="User-Options">List:</label>
+             {% block SelectList %}
               <select class="select-L" id="select-L">
                 {% for ListName in list_dict %}
                 <option>{{ListName}}</option>
                 {% endfor %}
               </select>
+              {% endblock%}
             </div>
             <div class="Select-DueDate" for="Select-DueDate">
               <label class="User-Options" for="dateSelect">Due Date:</label>

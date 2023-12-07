@@ -16,6 +16,20 @@ function openOptionsFrame() {
   // Event listener to close the options frame when clicking away from it
   document.getElementById('overlay').addEventListener('click', closeOptionsFrame);
 
+
+    function viewChangesHistory() {
+      var changesHistoryTable = document.getElementById('changesHistoryTable');
+      if (changesHistoryTable.style.display === 'none') {
+        changesHistoryTable.style.display = 'block';
+      } else {
+        changesHistoryTable.style.display = 'none';
+      }
+    }
+
+
+
+
+
 function AddNewList(inputText) {
   // Create elements
   var li = document.createElement("li");

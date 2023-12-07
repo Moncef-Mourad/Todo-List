@@ -53,6 +53,11 @@
 
 {% endblock %}   
 
+{% block SelectList %}
+<select class="select-L" id="select-L">
+<option>{{List.ListName}}</option>
+</select>
+{% endblock %}
 {% block script %}
 <script src="{% static 'ListIconColor.js' %}"></script>
 {% endblock %}

@@ -11,6 +11,19 @@ var DeleteBtn = document.getElementById("Delete-Btn");
 var clicked = false;
 let src = '';
 
+
+function convertDate(originalDueDate){
+    if(originalDueDate.includes('/')){
+      var components = originalDueDate.split('/');
+      var month = components[0];
+      var day = components[1];
+      var year = components[2];
+      // Rearrange the components in the YYYY-MM-DD format
+      var modifiedString = year + '-' + month + '-' + day;}
+      return modifiedString
+}
+
+
 var path = window.location.pathname;
 var pathArray = path.split("/");
 var lastPart = pathArray[pathArray.length - 1];
@@ -97,6 +110,58 @@ AddNewTask_Label.addEventListener('click',function(){
         });
     });
 }
+
+else{
+  document.getElementById("Save-Btn").addEventListener("click", function () {
+      var originalDueDate = document.getElementById("dateSelect").value;
+      var components = originalDueDate.split('/');
+      var month = components[0];
+      var day = components[1];
+      var year = components[2];
+      // Rearrange the components in the YYYY-MM-DD format
+      var modifiedString = year + '-' + month + '-' + day;
+      let updatedTaskData = {
+        title: document.getElementById("Task-Title").value,
+        description: document.getElementById("Task-Description").value,
+        list: document.getElementById("select-L").value,
+        due_date: modifiedString,
+        progress: document.getElementById("select-P").value,
+        curr_url:window.location.pathname
+      };
+      // Extract the CSRF token from the form
+      let csrfToken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
+
+      fetch(
+        `/index/todo_page/create/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
+          },
+          body: JSON.stringify(updatedTaskData),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // Redirect the user based on the source
+          if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+}
+
+
+
+
+
 });
 
  }
@@ -153,7 +218,11 @@ taskDivs.forEach(function (taskDiv) {
         })
         
         }
-    else if ( src == 'Upcoming' || src == 'Today' ){
+
+    else if (src == 'Calendar'){
+      
+    }
+    else{
 
       document.getElementById("Save-Btn").addEventListener("click", function () {
         console.log(window.location.href);
@@ -161,9 +230,11 @@ taskDivs.forEach(function (taskDiv) {
           title: document.getElementById("Task-Title").value,
           description: document.getElementById("Task-Description").value,
           list: document.getElementById("select-L").value,
-          due_date: document.getElementById("dateSelect").value,
+          due_date: convertDate(document.getElementById("dateSelect").value),
           progress: document.getElementById("select-P").value,
         };
+        
+        console.log(updatedTaskData);
   
         // Extract the CSRF token from the form
         let csrfToken = document.querySelector(
@@ -194,12 +265,9 @@ taskDivs.forEach(function (taskDiv) {
           });
       });
     }
-    else if (src == 'Today'){
-      
-    }
-    else if (src == 'Calendar'){
-      
-    }
+
+
+
 
 
     let response = await fetch(`/index/todo_page/${src}/${taskId2}/`);
