@@ -5,6 +5,7 @@ from django.db import models
 
 
 class List(models.Model):
+    
     ListName = models.CharField(default='Personal',max_length=10, primary_key=True)
     svgColor = models.CharField(default='black',max_length=10)
 class Todo(models.Model):

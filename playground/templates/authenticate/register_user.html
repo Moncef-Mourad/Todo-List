@@ -55,7 +55,7 @@
     
    {% block content %}
    {% if form.errors %}
-   <p>There was an error with your form </p>
+   <p style="color: red;">There was an error in your form...</p>
    {% endif %}
     <h2>Register</h2>
     <form action="{% url 'register_user_page'%}" method="POST">
