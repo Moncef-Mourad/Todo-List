@@ -1,0 +1,79 @@
+{% extends 'base_layout.html' %}
+  {% load static %}
+
+  {% block Selected_Login %}id="Selected"{% endblock %}
+
+      <!-- ################################################""ACTIVE################################################"" -->
+
+{% block Active %}      
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #525252;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .register-container {
+        width: 400px;
+        margin: 150px auto;
+        background-color: #1E293C;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: rgb(255, 255, 255);
+    }
+    
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: rgb(255, 255, 255);
+        padding: 10px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+
+
+<div class="register-container">
+    
+    
+   {% block content %}
+   {% if form.errors %}
+   <p>There was an error with your form </p>
+   {% endif %}
+    <h2>Register</h2>
+    <form action="{% url 'register_user_page'%}" method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        
+        <br> </br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
+
+
+
+{% endblock %}
+{% endblock %}      
+{% block script %}
+<script src="{% static 'ListIconColor.js' %}"></script>
+{% endblock %}

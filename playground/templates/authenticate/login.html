@@ -1,0 +1,80 @@
+{% extends 'base_layout.html' %}
+  {% load static %}
+
+  {% block Selected_Login %}id="Selected"{% endblock %}
+
+      <!-- ################################################""ACTIVE################################################"" -->
+
+{% block Active %}      
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        width: 300px;
+        margin: 150px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: red;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+
+
+<div class="login-container">
+    
+    {% if messages %} 
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
+    {% block content%}
+    {% endblock %}
+
+
+    <h2>Connexion</h2>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <button type="submit">Se Connecter</button>
+    </form>
+</div>
+
+
+
+
+
+
+{% endblock %}      
+{% block script %}
+<script src="{% static 'ListIconColor.js' %}"></script>
+{% endblock %}

@@ -64,6 +64,8 @@
             <input placeholder="Search" />
           </div>
 
+          
+
           <div class="Tasks">
             <ul class="Tasks-List">
               <p>Tasks</p>
@@ -147,6 +149,8 @@
               </li>
             </ul>
           </div>
+          <ul>
+           
         </div>
 
         <div class="Line"></div>
@@ -221,8 +225,24 @@
                      
                     /></svg>Sign Out</a
                 >
-              </li>
-            </ul>
+                <ul>
+                {%if user.is_authenticated%}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout_page'%}" style="color:#fff;">Logout</a>
+                </li>
+                
+                {%else%}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'register_user_page'%}" style="color:#fff;">Register</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login_page'%}" style="color:#fff;">Login</a>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                {%endif%}
           </div>
         </div>
       </div>
