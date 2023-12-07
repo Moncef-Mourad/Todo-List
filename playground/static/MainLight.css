@@ -49,7 +49,7 @@ svg{
   }
 
   .LeftBarBG::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
   
   .LeftBarBG::-webkit-scrollbar-thumb {
@@ -58,7 +58,7 @@ svg{
   }
   
   .LeftBarBG::-webkit-scrollbar-track {
-    background-color: #0F172B;
+    background-color: #fff;
     border-radius: 6px;
   }
   
@@ -149,6 +149,29 @@ svg{
     margin-bottom: 4%;
   }
 
+  .delete-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFFDFD;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: normal;
+  }
+  
+  .delete-button:hover {
+  color:red;
+    /* background-color: # ; */
+  }
+
+  #List-Info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .AddNewList-Div{
     display: flex;
     align-items: center;
@@ -160,8 +183,37 @@ svg{
     cursor: pointer;
     resize: none;
     color:#000 ;
+    width: 50%;
     background-color: #F5F5F5;
   }
+
+/* AddNewList ColorPalette */
+
+input[type="color"] {
+  appearance: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 10%;
+  margin-right: 5%;
+  outline: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* END ColorPalette */
+
+
+
  
   .Tasks-Icons, .Lists-Icons, .Options-Icons{
     margin-left: 3%;
@@ -189,6 +241,7 @@ svg{
     .options-frame {
       display: none;
       position: fixed;
+      overflow-y: auto;
       width: 60%;
       height: 60%;
       top: 50%;
@@ -212,6 +265,13 @@ svg{
 
     .FrameContent{
       display: flex;
+      flex-direction: column;
+      
+    }
+
+    .Smt{
+      display: flex;
+      margin-bottom: 10%;
       align-items: center;
     }
 
@@ -243,7 +303,7 @@ svg{
   .Lists-Icons{
     border-radius: 5px;
     /* padding: 0%; */
-    width: 20px;
+    width: 25px;
     height: 20px;
   }
   
@@ -570,7 +630,7 @@ margin-top: 10%;
   justify-content: space-between;
   align-items: end;
   align-content: center;
-  margin-top: 85%;
+  margin-top: 60%;
 }
 
 .Delete-Btn{
@@ -694,7 +754,7 @@ margin-top: 10%;
   margin:0;
   font-size: 14px;
 }
-p, h1, h2,label{
+p, h1, h2,label, td, th{
   color: #000;
  }
 

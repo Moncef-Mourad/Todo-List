@@ -31,12 +31,14 @@ class Todo(models.Model):
         if self.isDone:
             self.task_Progress = 'Done'
         else:
-            self.task_Progress='Incomplete'    
+            self.task_Progress='Incomplete'  
+
+        self.task_List = List.objects.get(ListName=self.task_List.ListName)      
         # Call the original save method to save the object
         super(Todo, self).save(*args, **kwargs)   
 
     def __str__(self):
-        return str(self.id) + '    ||    ' + self.task_Text + '    ||    ' + 'Descr...' + '    ||    ' + self.task_List + '    ||    ' + self.task_Progress + '    ||    Date Created:' + str(self.date_created) + '    ||    Due Date:' + str(self.due_date)
+        return str(self.id) + '    ||    ' + self.task_Text + '    ||    ' + 'Descr...' + '    ||    ' + self.task_List.ListName + '    ||    ' + self.task_Progress + '    ||    Date Created:' + str(self.date_created) + '    ||    Due Date:' + str(self.due_date)
 
 
 

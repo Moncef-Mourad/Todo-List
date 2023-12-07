@@ -16,6 +16,20 @@ function openOptionsFrame() {
   // Event listener to close the options frame when clicking away from it
   document.getElementById('overlay').addEventListener('click', closeOptionsFrame);
 
+
+    function viewChangesHistory() {
+      var changesHistoryTable = document.getElementById('changesHistoryTable');
+      if (changesHistoryTable.style.display === 'none') {
+        changesHistoryTable.style.display = 'block';
+      } else {
+        changesHistoryTable.style.display = 'none';
+      }
+    }
+
+
+
+
+
 function AddNewList(inputText) {
   // Create elements
   var li = document.createElement("li");
@@ -24,7 +38,6 @@ function AddNewList(inputText) {
   
   // Set attributes for SVG element
   svg.setAttribute('class', 'Lists-Icons');
-  svg.setAttribute('style', 'background: #fff500;');
   
   // Append elements to create the new list item
   a.appendChild(svg);
@@ -43,16 +56,22 @@ function AddNewList(inputText) {
   listsUl.insertBefore(li, referenceElement);
 }
 
-
-
 function HandleKeyPress(event){
+  
    // Check if the pressed key is Enter (key code 13)
     if (event.keyCode === 13) {
-      // Do something when Enter key is pressed
-      alert('Enter key pressed!');
       var AddNewListValue = document.getElementById('AddNewList').value
-      var Color = document.getElementById('AddNewList').value
-      AddNewList(AddNewListValue)
-      fetch(`index/todo_page/AddNewList/${AddNewListValue}/${Color}`)
+      var Color = document.getElementById('colorPicker').value;
+      // AddNewList(AddNewListValue);
+      var encodedColor = encodeURIComponent(Color);
+      fetch(`/index/todo_page/AddNewList/${AddNewListValue}/${encodedColor}/`).then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+      console.log("Refreshing...");
+      location.reload();
     }
 }  

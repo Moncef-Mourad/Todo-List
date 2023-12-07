@@ -57,6 +57,17 @@ def register_user(request):
 #request -> response 
 #request handler
 
+
+def load_Lists():
+    #Load The Available Lists
+    Curr_Lists = List.objects.all()
+    list_dict  = {}
+    for list_obj in Curr_Lists:
+        list_dict[list_obj.ListName] = list_obj.svgColor  
+    return list_dict    
+
+
+
 def index(request,YY,MM,DD):
     date = YY+'-'+MM+'-'+DD
     # # Connect to the database
@@ -105,14 +116,22 @@ def create_task(request):
             Descr = data.get('description')
             due_date = data.get('due_date')
             Progress = data.get('progress')
-            List = data.get('list')
+            listname = data.get('list')
             curr_URL = data.get('curr_url')
             print(txt)
             print(curr_URL)
-            new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress,task_List=List, date_created=curr_date)
+            new_Task = Todo(task_Text=txt,task_Descr=Descr,due_date=due_date,task_Progress=Progress, date_created=curr_date)
+            new_Task.task_List = List.objects.get(ListName=listname)
             new_Task.save()
     return JsonResponse({'message': 'Data received successfully!', 'redirect_url': curr_URL})
     
+
+def delete_List(request, listName):
+    if request.method == 'POST':
+        list_wanted = get_object_or_404(List,ListName = listName)
+        list_wanted.delete()
+    return redirect('today_page')
+
 
 def handle_task(request, task_id, source):
     task = get_object_or_404(Todo, id=task_id)
@@ -129,7 +148,12 @@ def handle_task(request, task_id, source):
             DeletedTask.objects.create(original_task=task)
             # generate_notification("Task Delete Successfully!")
     elif '/todo_page/save/' in request.path:
+        old_task_Text = task.task_Text
         old_task_Descr = task.task_Descr
+        old_due_date = task.due_date
+        old_task_Progress = task.task_Progress
+        old_task_List = task.task_List.ListName
+
         # Logic for save changes
         if request.method == 'POST':
             data = json.loads(request.body)
@@ -137,16 +161,31 @@ def handle_task(request, task_id, source):
             task.task_Descr = data.get('description', task.task_Descr)
             task.due_date = data.get('due_date', task.due_date)
             task.task_Progress = data.get('progress', task.task_Progress)
-            task.task_List = data.get('list', task.task_List)
-            task.save()
+            task.task_List.ListName = data.get('list', task.task_List.ListName)
+            print(task.task_List.ListName)
+            print(task)
             
             # Save modifications to the ModificationHistory model
             modified_fields = {
                 'task_Text': {
+                    'old_value': old_task_Text,
+                    'new_value': task.task_Text
+                },'task_Descr': {
                     'old_value': old_task_Descr,
                     'new_value': task.task_Descr
+                },'due_date': {
+                    'old_value': str(old_due_date),
+                    'new_value': task.due_date
+                },'task_Progress': {
+                    'old_value': old_task_Progress,
+                    'new_value': task.task_Progress
+                },'task_List': {
+                    'old_value': old_task_List,
+                    'new_value': task.task_List.ListName
                 },
 }
+            print(modified_fields)
+            task.save() 
             task.save_modifications(modified_fields)
             # Assuming 'todo_instance' is an instance of the Todo model
             modification_history = ModificationHistory.objects.filter(original_task=task)
@@ -198,18 +237,26 @@ def checked_done_todo(request,src,task_id):
     elif src == 'RecycleBin':
         return JsonResponse({'message': 'Data received successfully!', 'redirect_url': reverse('RecycleBin_page')})
 
+
+
+
 def AddNewList(request,NewListName,HashColor):
-    List = List.objects.create(ListName=NewListName, svgColor=HashColor)
+
+    List.objects.create(ListName=NewListName, svgColor=HashColor)
+    return JsonResponse({'message': 'List Created successfully!'})
+
 
 
 
 
 #URLS for the Html's 
 def view_today_page(request):
+    list_dict = load_Lists()
+    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+
     tasks_NotDone_NotInRecycleBin = 0
     tasks_Done_NotInRecycleBin = 0
     current_date = datetime.now().date()
-    formatted_today = current_date.strftime('%b %d, %Y')
     today_tasks = Todo.objects.filter(due_date=current_date)
     for task in today_tasks:
         if not task.isDone and not task.is_in_recycle_bin:
@@ -217,10 +264,13 @@ def view_today_page(request):
         elif task.isDone and not task.is_in_recycle_bin:
             tasks_Done_NotInRecycleBin+=1      
     
-    return render(request, 'Today.html',{'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
+    return render(request, 'Today.html',{'list_dict':list_dict,'modifications':modifications,'today_tasks':today_tasks,'today':current_date,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_Done':tasks_Done_NotInRecycleBin})
 
 
 def view_upcoming_page(request):
+    list_dict = load_Lists()
+    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+
     tasks_NotDone_NotInRecycleBin=0
     tasks_Done_NotInRecycleBin=0
     current_date = datetime.now().date()
@@ -234,20 +284,20 @@ def view_upcoming_page(request):
             tasks_Done_NotInRecycleBin+=1
 
 
-    return render(request, 'Upcoming.html', {'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
+    return render(request, 'Upcoming.html', {'list_dict':list_dict,'modifications':modifications,'upcoming_tasks':upcoming_tasks, 'next_day':formatted_next_day,'counter_notDone':tasks_NotDone_NotInRecycleBin,'counter_done':tasks_Done_NotInRecycleBin})
 
 
 
 
 def get_task_data(request, src,task_id):
-    if '/todo_page/Upcoming' in request.path or '/todo_page/Today' in request.path:
+    if not '/todo_page/RecycleBin' in request.path:
         task = get_object_or_404(Todo, id=task_id)
-    elif '/todo_page/RecycleBin' in request.path:
+    else:
         task = get_object_or_404(DeletedTask, original_task_id=task_id).original_task
     data = {
         'title': task.task_Text,
         'description': task.task_Descr,
-        'list': task.task_List,
+        'list': task.task_List.ListName,
         'progress': task.task_Progress,
         'due_date': task.due_date
     }
@@ -256,16 +306,31 @@ def get_task_data(request, src,task_id):
 
 
 def view_calendar_page(request):
-    return render(request, 'Calendar.html')
+    list_dict = load_Lists()
+    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+
+    return render(request, 'Calendar.html',{'list_dict':list_dict,'modifications':modifications,})
 
 def view_stickywall_page(request):
-    return render(request, 'StickyWall.html')
+    list_dict = load_Lists()
+    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+
+    return render(request, 'StickyWall.html',{'list_dict':list_dict,'modifications':modifications,})
 
 def view_RecycleBin(request):
+    list_dict = load_Lists()
+    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+
     Recycled_Tasks = DeletedTask.objects.all()
-    return render(request, 'RecycleBin.html',{'Recycled_Tasks':Recycled_Tasks})
+    return render(request, 'RecycleBin.html',{'list_dict':list_dict,'modifications':modifications,'Recycled_Tasks':Recycled_Tasks})
 
+def view_List(request, ListName):
+    list_dict = load_Lists()
+    modifications = ModificationHistory.objects.all().order_by('-modification_date')
+    listObj = get_object_or_404(List,ListName=ListName)
+    listTasks = Todo.objects.filter(task_List=listObj.ListName)
 
+    return render(request, 'List.html', {'list_dict':list_dict,'modifications':modifications, 'List':listObj, 'listTasks':listTasks})
 
 
 
