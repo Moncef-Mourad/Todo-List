@@ -1,7 +1,6 @@
 from django.urls import path,include
 from . import views
 
-
 #URLConf
 urlpatterns = [
     path('index/view_week/<YY>/<MM>/<DD>/', views.index,name='index'),
@@ -14,8 +13,6 @@ urlpatterns = [
     path('index/todo_page/AddNewList/<str:NewListName>/<str:HashColor>/',views.AddNewList,name='AddNewList'),
     path('index/todo_page/delete/<str:listName>/', views.delete_List, name='delete_List'),
 
-    
-    
     path('index/todo_page/Upcoming', views.view_upcoming_page, name="upcoming_page"),
     path('index/todo_page/Today', views.view_today_page, name='today_page'),
     path('index/todo_page/Calendar', views.view_calendar_page, name="calendar_page"),
@@ -23,15 +20,10 @@ urlpatterns = [
     path('index/todo_page/RecycleBin', views.view_RecycleBin, name="RecycleBin_page"),
     path('index/todo_page/<str:ListName>', views.view_List, name="viewList_page"),
 
-
-    
     path('index/login_user', views.login_user, name="login_page" ),
     path('index/logout_user', views.logout_user, name="logout_page" ),
     path('index/register_user', views.register_user, name="register_user_page" ),
-   
     path('index/todo_page/', include('django.contrib.auth.urls')),
-    
 
-    
 
 ]

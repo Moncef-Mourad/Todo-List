@@ -10,14 +10,11 @@ class List(models.Model):
     svgColor = models.CharField(default='black',max_length=10)
 class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #id
     date_created = models.DateField()
     due_date = models.DateField(default='0000-00-00')   
     task_Text = models.CharField(max_length=50) 
     task_Descr = models.CharField(default='Default Decription',max_length=150)
-    # task_List = models.CharField(default='Personal', max_length=10) 
-    task_List = models.ForeignKey(List,to_field='id',on_delete=models.CASCADE) 
-
+    task_List = models.ForeignKey(List,to_field='id',on_delete=models.CASCADE)
     task_Progress = models.CharField(default='Incomplete',max_length=15)
     isDone = models.BooleanField(default=False)
 

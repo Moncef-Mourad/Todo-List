@@ -43,11 +43,11 @@
         {% for modification in modifications %}
           <tr>
             <td>{{ modification.original_task.task_Text }}</td>
-            <td>OLD_VALUE: {{ modification.modified_fields.task_Text.old_value }}<br>NEW_VALUE: {{ modification.modified_fields.task_Text.new_value }}</td>
-            <td>old_Value: {{ modification.modified_fields.task_Descr.old_value }}<br>new_Value: {{ modification.modified_fields.task_Descr.new_value }}</td>
-            <td>old_Value: {{ modification.modified_fields.task_List.old_value }}<br>new_Value: {{ modification.modified_fields.task_List.new_value }}</td>
-            <td>old_Value: {{ modification.modified_fields.due_date.old_value }}<br>new_Value: {{ modification.modified_fields.due_date.new_value }}</td>
-            <td>old_Value: {{ modification.modified_fields.task_Progress.old_value }}<br>new_Value: {{ modification.modified_fields.task_Progress.new_value }}</td>
+            <td>{% if  modification.modified_fields.task_Text.old_value != modification.modified_fields.task_Text.new_value %}OLD_VALUE: {{ modification.modified_fields.task_Text.old_value }}<br>NEW_VALUE: {% endif %}{{ modification.modified_fields.task_Text.new_value }}</td>
+            <td>{% if  modification.modified_fields.task_Descr.old_value != modification.modified_fields.task_Descr.new_value %}old_Value: {{ modification.modified_fields.task_Descr.old_value }}<br>new_Value: {% endif %}{{ modification.modified_fields.task_Descr.new_value }}</td>
+            <td>{% if  modification.modified_fields.task_List.old_value != modification.modified_fields.task_List.new_value %}old_Value: {{ modification.modified_fields.task_List.old_value }}<br>new_Value: {% endif %}{{ modification.modified_fields.task_List.new_value }}</td>
+            <td>{% if  modification.modified_fields.due_date.old_value != modification.modified_fields.due_date.new_value %}old_Value: {{ modification.modified_fields.due_date.old_value }}<br>new_Value: {% endif %}{{ modification.modified_fields.due_date.new_value }}</td>
+            <td>{% if  modification.modified_fields.task_Progress.old_value != modification.modified_fields.task_Progress.new_value %}old_Value: {{ modification.modified_fields.task_Progress.old_value }}<br>new_Value: {% endif %}{{ modification.modified_fields.task_Progress.new_value }}</td>
             <td>{{ modification.modification_date }}</td>
           </tr>
         {% endfor %}
